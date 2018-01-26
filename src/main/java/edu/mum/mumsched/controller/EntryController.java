@@ -44,7 +44,7 @@ public class EntryController {
     }
 
     @PostMapping("/saveEntry")
-    public String saveEntry(@ModelAttribute @Valid Entry entry, BindingResult bindingResult){
+    public String saveEntry(@Valid Entry entry, BindingResult bindingResult){
         bindingResult.hasErrors();
         iEntryService.save(entry);
         return "redirect:/allEntry";
