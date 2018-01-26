@@ -1,5 +1,6 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.service.IEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
