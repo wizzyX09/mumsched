@@ -139,6 +139,30 @@
                     <!-- menu -->
 
                     <li sec:authorize="hasAuthority('ADMIN')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Users<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="../allUsers">Manage</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Courses<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="../allCourse">Manage</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
                         <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Entry<span
                                 class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -149,6 +173,43 @@
 
                         </ul>
                     </li>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Blocks<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="../allBlocks">Manage</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Section<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="../allSection">Manage</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Schedule<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="../allSchedule">Manage</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <!-- menu -->
                 </ul>
             </div>
