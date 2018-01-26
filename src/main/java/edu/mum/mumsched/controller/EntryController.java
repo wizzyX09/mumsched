@@ -40,7 +40,7 @@ public class EntryController {
     @GetMapping("/updateEntry/{id}")
     public String updateEntryForm(@PathVariable("id") Integer id,Model model){
         model.addAttribute("entry",iEntryService.findById(id));
-        return "updateEntryForm";
+        return "addEntryForm";
     }
 
     @PostMapping("/saveEntry")

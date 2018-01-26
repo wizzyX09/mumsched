@@ -1,5 +1,7 @@
 package edu.mum.mumsched.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -13,9 +15,7 @@ public class Entry {
     private String entryName;
     private Integer fppNumber;
     private Integer mppNumber;
-    @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     public Integer getId() {
