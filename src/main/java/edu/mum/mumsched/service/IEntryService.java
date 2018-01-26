@@ -1,7 +1,5 @@
 package edu.mum.mumsched.service;
 
-import edu.mum.mumsched.model.Entry;
-
 import java.util.List;
 
 public interface IEntryService {
