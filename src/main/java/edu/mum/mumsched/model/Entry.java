@@ -1,10 +1,10 @@
 package edu.mum.mumsched.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="entries")
@@ -17,6 +17,8 @@ public class Entry {
     private Integer mppNumber;
     private Date startDate;
     private Date endDate;
+    private Schedule schedule;
+    private Set<Student> students;
 
     public Integer getId() {
         return id;
@@ -64,5 +66,17 @@ public class Entry {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
     }
 }

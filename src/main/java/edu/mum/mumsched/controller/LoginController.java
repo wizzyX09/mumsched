@@ -26,8 +26,8 @@ public class LoginController {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-	
-	
+
+
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
@@ -43,8 +43,7 @@ public class LoginController {
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			bindingResult
-					.rejectValue("email", "error.user",
-							"There is already a user registered with the email provided");
+					.rejectValue("email", "error.user", "There is already a user registered with the email provided");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("users/registration");
@@ -53,7 +52,6 @@ public class LoginController {
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("users/registration");
-			
 		}
 		return modelAndView;
 	}
