@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository("entryRepository")
 public interface EntryRepository extends JpaRepository<Entry, Integer> {
 	public Entry findEntryByEntryName(String name);
-
 }
