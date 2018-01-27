@@ -21,9 +21,6 @@ public class Student {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "students")
     private Set<Section> sections;
 
-//    @OneToOne(mappedBy = "student")
-//    private Entry entry;
-
     public Integer getId() {
         return id;
     }

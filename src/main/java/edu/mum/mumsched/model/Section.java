@@ -18,15 +18,6 @@ public class Section {
             inverseJoinColumns = { @JoinColumn(name = "student_id") })
     private Set<Student> students;
 
-//    @OneToOne(mappedBy = "sections")
-//    private Block block;
-//
-//    @OneToOne(mappedBy = "sections")
-//    private Faculty faculty;
-//
-//    @OneToOne(mappedBy = "sections")
-//    private Course course;
-
     public Section() {
     }
 
