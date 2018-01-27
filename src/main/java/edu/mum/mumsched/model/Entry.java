@@ -1,7 +1,5 @@
 package edu.mum.mumsched.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -12,7 +10,7 @@ import java.util.Set;
 public class Entry {
     @Id@GeneratedValue
     private Integer id;
-    @NotEmpty(message = "Specify an entry name")
+    @NotNull(message = "Specify an entry name")
     private String entryName;
     private Integer fppNumber;
     private Integer mppNumber;
