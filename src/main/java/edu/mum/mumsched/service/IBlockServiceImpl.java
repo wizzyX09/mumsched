@@ -15,7 +15,7 @@ public class IBlockServiceImpl implements IBlockService{
 
     @Override
     public Block findById(Integer blockId) {
-        return blockRepository.findBlockById(blockId);
+        return blockRepository.findOne(blockId);
     }
 
     @Override

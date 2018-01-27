@@ -1,10 +1,17 @@
 package edu.mum.mumsched.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import edu.mum.mumsched.model.Block;
 import edu.mum.mumsched.service.IBlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class BlockController {
@@ -18,5 +25,28 @@ public class BlockController {
         return "allBlock";
     }
 
+    @GetMapping("/newBlock")
+    public String addBlockForm(Model model) {
+        model.addAttribute("block", new Block());
+        return "addBlockForm";
+    }
 
+    @PostMapping("/saveBlock")
+    public String saveBlockForm(@Valid Block block, BindingResult bindingResult) {
+        bindingResult.hasErrors();
+        iBlockService.save(block);
+        return "redirect:/allBlock";
+    }
+
+    @GetMapping("/deleteBlock/{id}")
+    public String deleteBlockForm(@PathVariable("id") Integer id) {
+        iBlockService.delete(id);
+        return "redirect:/allBlock";
+    }
+
+    @GetMapping("/updateBlock/{id}")
+    public String updateBlockForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("block", iBlockService.findById(id));
+        return "addBlockForm";
+    }
 }
