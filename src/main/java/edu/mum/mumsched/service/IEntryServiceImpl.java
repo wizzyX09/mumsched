@@ -13,7 +13,6 @@ public class IEntryServiceImpl implements IEntryService {
     @Autowired
     private EntryRepository entryRepository;
 
-
     @Override
     public Entry findById(Integer entryId) {
         return entryRepository.findOne(entryId);

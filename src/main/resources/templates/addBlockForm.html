@@ -1,0 +1,58 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <form action="#" th:action="@{/saveBlock}" th:object="${block}" method="post">
+                <fieldset>
+                    <input class="form-control"  type="hidden" th:field="*{id}" />
+                    <div class="form-group">
+                        <label for="blockName">Block Name: </label>
+                        <input class="form-control" id="blockName" type="text" th:field="*{blockName}" />
+                        <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate">Start Date: </label>
+                        <input class="form-control" id="startDate" type="date" th:field="*{startDate}" />
+                        <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate">End Date: </label>
+                        <input  class="form-control" id="endDate" type="date" th:field="*{endDate}" />
+                        <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FPPNum">Number of FPP course: </label>
+                        <input class="form-control" id="FPPNum" type="number" th:field="*{numberOfFppCourse}" />
+                        <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="MPPNum">Number of MPP course: </label>
+                        <input class="form-control" id="MPPNum" type="number" th:field="*{numberOfMppCourse}" />
+                        <p class="help-block"></p>
+                    </div>
+
+                    <p>
+                        <input id="btnAdd" class="btn btn-primary" type="submit" value="Add" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>
+
