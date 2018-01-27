@@ -23,9 +23,9 @@ public class Section {
 //
 //    @OneToOne(mappedBy = "sections")
 //    private Faculty faculty;
-
-    @OneToOne(mappedBy = "sections")
-    private Course course;
+//
+//    @OneToOne(mappedBy = "sections")
+//    private Course course;
 
     public Section() {
     }
