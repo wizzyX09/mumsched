@@ -13,7 +13,7 @@ public class Schedule implements Serializable{
     @Id @GeneratedValue
     private Integer id;
     private Date generatedDate;
-    //approvedDate
+    private Date approvedDate;
     private String status;//should be an enum
     @OneToOne
     private Entry entry;
@@ -50,4 +50,11 @@ public class Schedule implements Serializable{
         this.entry = entry;
     }
 
+    public Date getApprovedDate() {
+        return approvedDate;
+    }
+
+    public void setApprovedDate(Date approvedDate) {
+        this.approvedDate = approvedDate;
+    }
 }
