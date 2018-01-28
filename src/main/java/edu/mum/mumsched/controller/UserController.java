@@ -1,5 +1,6 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.model.User;
 import edu.mum.mumsched.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,5 +17,11 @@ public class UserController {
     public String findAll(Model model) {
         model.addAttribute("allUser", userService.findAll());
         return "allUser";
+    }
+
+    @GetMapping("/newUser")
+    public String addUser(Model model) {
+        model.addAttribute("user", new User());
+        return "addUserForm";
     }
 }
