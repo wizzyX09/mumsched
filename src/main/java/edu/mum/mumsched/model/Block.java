@@ -2,11 +2,10 @@ package edu.mum.mumsched.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 public class Block {
@@ -19,6 +18,8 @@ public class Block {
     private Date endDate;
     private int numberOfFppCourse;
     private int numberOfMppCourse;
+    @OneToMany(mappedBy = "block")
+    private Set<Section> sections;
 
     public int getId() {
         return id;
@@ -67,4 +68,23 @@ public class Block {
     public void setNumberOfMppCourse(int numberOfMppCourse) {
         this.numberOfMppCourse = numberOfMppCourse;
     }
+
+    public Set<Section> getSections() {
+        return Collections.unmodifiableSet(sections);
+    }
+    public void addSection(Section section){
+        if(section!=null) {
+            sections.add(section);
+            section.setBlock(this);
+        }
+    }
+
+    public void removeSection(Section section){
+        if(section!=null){
+            sections.remove(section);
+            section.setBlock(null);
+        }
+    }
+
+
 }

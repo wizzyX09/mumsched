@@ -9,17 +9,16 @@ public class Student {
     @Id
     @GeneratedValue
     private Integer id;
-
     private Integer studentId;
     private String firstName;
     private String lastName;
-
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "students")
+    @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
+    @OneToOne
+    private Entry entry;
 
     public Integer getId() {
         return id;

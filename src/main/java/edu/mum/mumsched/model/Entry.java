@@ -16,7 +16,9 @@ public class Entry {
     private Integer mppNumber;
     private Date startDate;
     private Date endDate;
+    @OneToOne
     private Schedule schedule;
+    @OneToMany(mappedBy = "entry")
     private Set<Student> students;
 
     public Integer getId() {

@@ -5,18 +5,30 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@Table(name="course")
+@Table(name = "course")
 public class Section {
-    @Id@GeneratedValue
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private Integer capacity;
+    private Integer enrolled;
+    private Integer availableSeats;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "section_student",
-            joinColumns = { @JoinColumn(name = "section_id") },
-            inverseJoinColumns = { @JoinColumn(name = "student_id") })
+            joinColumns = {@JoinColumn(name = "section_id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id")})
     private Set<Student> students;
+
+    @OneToOne
+    private Block block;
+
+    @OneToOne
+    private Faculty faculty;
+
+    @OneToOne
+    private Course course;
 
     public Section() {
     }
@@ -43,5 +55,53 @@ public class Section {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public Integer getEnrolled() {
+        return enrolled;
+    }
+
+    public void setEnrolled(Integer enrolled) {
+        this.enrolled = enrolled;
+    }
+
+    public Integer getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(Integer availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

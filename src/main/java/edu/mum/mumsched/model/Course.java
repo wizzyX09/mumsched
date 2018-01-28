@@ -14,8 +14,10 @@ public class Course implements Serializable{
     private String specialization;//shoud be an enum
     @OneToMany
     private Set<Course> prerequisites;
-    @ManyToMany(mappedBy = "courses")
+
+    @ManyToMany(mappedBy = "preferredCourses")
     private Set<Faculty> faculties;
+
     @OneToMany(mappedBy = "course")
     private Set<Section> sections;
 
