@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@Table(name = "course")
 public class Section {
     @Id
     @GeneratedValue
