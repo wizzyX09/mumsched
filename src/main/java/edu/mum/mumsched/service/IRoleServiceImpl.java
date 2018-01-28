@@ -17,4 +17,9 @@ public class IRoleServiceImpl implements IRoleService {
     public List<Role> findAll() {
         return roleRepository.findAll();
     }
+
+    @Override
+    public Role findById(Integer id) {
+        return roleRepository.findOne(id);
+    }
 }

@@ -1,17 +1,21 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.model.Role;
 import edu.mum.mumsched.model.User;
 import edu.mum.mumsched.service.IRoleService;
 import edu.mum.mumsched.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -40,5 +44,20 @@ public class UserController {
         bindingResult.hasErrors();
         userService.saveUser(user);
         return "redirect:/allUsers";
+    }
+
+    @InitBinder
+    public void initBinder(ServletRequestDataBinder binder) {
+        binder.registerCustomEditor(List.class, "roles", new CustomCollectionEditor(List.class) {
+
+            protected Object convertElement(Object element) {
+                if (element != null) {
+                    Integer roleId = Integer.parseInt(element.toString());
+                    Role role = iRoleService.findById(roleId);
+                    return role;
+                }
+                return null;
+            }
+        });
     }
 }
