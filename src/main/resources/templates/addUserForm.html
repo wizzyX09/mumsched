@@ -30,10 +30,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="roles">Roles: </label>
-                        <select id="roles" th:field="*{roles}">
-                            <option value="FACULTY">Faculty</option>
-                            <option value="STUDENT">Student</option>
+                        <label for="roles">Role:</label>
+                        <select class="form-control" id="roles" th:field="*{roles}" placeholder="Select Role" required>
+                            <option th:each="type : ${listOfRoles}" th:value="${type}" th:text="${type.role}"></option>
                         </select>
                     </div>
 
