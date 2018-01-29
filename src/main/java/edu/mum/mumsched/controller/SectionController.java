@@ -1,19 +1,14 @@
 package edu.mum.mumsched.controller;
 
-import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.model.Section;
 import edu.mum.mumsched.service.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.validation.Valid;
 
 @Controller
 public class SectionController {
@@ -28,14 +23,14 @@ public class SectionController {
         return "section/manage";
     }
     //Display section Form
-    @RequestMapping(value="/section/addSectionForm",method = RequestMethod.GET)
+    @RequestMapping(value="/section/form",method = RequestMethod.GET)
     public String addNewSection(Model model){
-        model.addAttribute("newSection",new Section());
-        return "section/addSectionForm";
+        model.addAttribute("sectionForm",new Section());
+        return "section/form";
     }
 
     @RequestMapping(value="/section/saveSection",method = RequestMethod.POST)
-    public String saveSection(@ModelAttribute("newSection") Section section,
+    public String saveSection(@ModelAttribute("sectionForm") Section section,
                               Model model, RedirectAttributes redirectAttributes){
 
         iSectionService.save(section);
