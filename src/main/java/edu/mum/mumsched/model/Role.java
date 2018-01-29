@@ -1,6 +1,7 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -9,8 +10,12 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="role_id")
 	private int id;
+
 	@Column(name="role")
 	private String role;
+
+	@ManyToMany(mappedBy = "roles")
+	private Set<User> users;
 	
 	public int getId() {
 		return id;

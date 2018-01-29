@@ -1,11 +1,14 @@
 package edu.mum.mumsched.model;
 
+import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,23 +19,29 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private int id;
+
 	@Column(name = "email")
 	@Email(message = "*Please provide a valid Email")
 	@NotEmpty(message = "*Please provide an email")
-	private String email;
+    private String email;
+
 	@Column(name = "password")
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
 	@NotEmpty(message = "*Please provide your password")
 	@Transient
 	private String password;
+
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide your name")
 	private String name;
+
 	@Column(name = "last_name")
 	@NotEmpty(message = "*Please provide your last name")
 	private String lastName;
+
 	@Column(name = "active")
-	private int active;
+	private boolean active;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
@@ -77,16 +86,26 @@ public class User {
 		this.email = email;
 	}
 
-	public int getActive() {
+	public boolean getActive() {
 		return active;
 	}
 
-	public void setActive(int active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	// to display the list of roles as a comma separated strings
+	public String getRolesString() {
+		List<String> listOfRoles = new ArrayList<>();
+		for(Role role : roles) {
+			listOfRoles.add(role.getRole());
+		}
+
+		return StringUtils.join(listOfRoles);
 	}
 
 	public void setRoles(Set<Role> roles) {

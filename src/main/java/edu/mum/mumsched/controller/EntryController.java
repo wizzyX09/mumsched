@@ -22,13 +22,13 @@ public class EntryController {
     @GetMapping("/allEntry")
     public String findAll(Model model){
         model.addAttribute("allEntry",iEntryService.findAll());
-        return "allEntry";
+        return "entry/manage";
     }
 
     @GetMapping("/newEntry")
     public String addEntryForm(Model model){
         model.addAttribute("entry",new Entry());
-        return "addEntryForm";
+        return "entry/form";
     }
 
     @GetMapping("/deleteEntry/{id}")
@@ -40,7 +40,7 @@ public class EntryController {
     @GetMapping("/updateEntry/{id}")
     public String updateEntryForm(@PathVariable("id") Integer id,Model model){
         model.addAttribute("entry",iEntryService.findById(id));
-        return "addEntryForm";
+        return "entry/form";
     }
 
     @PostMapping("/saveEntry")

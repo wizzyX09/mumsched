@@ -9,5 +9,6 @@ public interface IEntryService {
     public void delete(Integer entryId);
     public void save(Entry entry);
     public List<Entry> findAll();
+    public List<Entry> findEntryWithoutSchedule();
 
 }
