@@ -21,13 +21,13 @@ public class BlockController {
     @GetMapping("/allBlock")
     public String findAll(Model model){
         model.addAttribute("allBlock",iBlockService.findAll());
-        return "allBlock";
+        return "block/manage";
     }
 
     @GetMapping("/newBlock")
     public String addBlockForm(Model model) {
         model.addAttribute("block", new Block());
-        return "addBlockForm";
+        return "block/form";
     }
 
     @PostMapping("/saveBlock")
@@ -46,6 +46,6 @@ public class BlockController {
     @GetMapping("/updateBlock/{id}")
     public String updateBlockForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("block", iBlockService.findById(id));
-        return "addBlockForm";
+        return "block/form";
     }
 }

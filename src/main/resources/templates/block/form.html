@@ -1,0 +1,77 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span th:if="${block.id != null}">Update Block</span>
+                    <span th:unless="${block.id != null}">Add New Block</span>
+                </div>
+                <div class="panel-body">
+                    <form th:action="@{/saveBlock}" th:object="${block}" method="post">
+                        <fieldset>
+                            <input class="form-control"  type="hidden" th:field="*{id}" />
+                            <div class="form-group">
+                                <label for="blockName" class="col-sm-3">Block Name: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="blockName" type="text" th:field="*{blockName}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startDate" class="col-sm-3">Start Date: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="startDate" type="date" th:field="*{startDate}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endDate" class="col-sm-3">End Date: </label>
+                                <div class="col-sm-9">
+                                    <input  class="form-control" id="endDate" type="date" th:field="*{endDate}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="FPPNum" class="col-sm-3">Number of FPP course: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="FPPNum" type="number" th:field="*{numberOfFppCourse}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="MPPNum" class="col-sm-3">Number of MPP course: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="MPPNum" type="number" th:field="*{numberOfMppCourse}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Save" />
+                                <a class="btn btn-default" th:href="@{/allBlock}">Cancel</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>
+
