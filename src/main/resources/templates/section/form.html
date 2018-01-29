@@ -12,16 +12,45 @@
                 <fieldset>
                     <input class="form-control"  type="hidden" th:field="*{id}" />
                     <div class="form-group">
-                        <label for="blockName">Block Name: </label>
-                        <input class="form-control" id="blockName" type="text" th:field="*{name}" />
+                        <label for="sectionName">Section Name: </label>
+                        <input class="form-control" id="sectionName" type="text" th:field="*{name}" />
                         <p class="help-block"></p>
                     </div>
 
                     <div class="form-group">
-                        <label for="startDate">Start Date: </label>
-                        <input class="form-control" id="startDate" type="number" th:field="*{capacity}" />
+                        <label for="capacity">Capacity</label>
+                        <input class="form-control" id="capacity" type="number" th:field="*{capacity}" />
                         <p class="help-block"></p>
                     </div>
+
+
+
+
+                    <div class="form-group">
+                        <label for="block">Block </label>
+
+                        <select class="form-control" th:field="${sectionForm.block}" id="block">
+                        <option value="0" >Select Block</option>
+                        <option th:each="block : ${blockList}" th:value="${block.id}" th:text="${block.blockName}"></option>
+                    </select>
+
+                        <p class="help-block"></p>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="course">Course </label>
+
+                        <select class="form-control" th:field="${sectionForm.course}" id="course">
+                            <option value="0" >Select Course</option>
+                            <option th:each="course : ${courseList}" th:value="${course.id}" th:text="${course.name}"></option>
+                        </select>
+
+                        <p class="help-block"></p>
+                    </div>
+
+
+
 
 
 

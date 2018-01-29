@@ -21,13 +21,13 @@ public class Section {
             inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName="id")})
     private Set<Student> students;
 
-    @OneToOne
+    @OneToOne(fetch=FetchType.EAGER)
     private Block block;
 
     @OneToOne
     private Faculty faculty;
 
-    @OneToOne
+    @OneToOne(fetch=FetchType.EAGER)
     private Course course;
 
     public Section() {
