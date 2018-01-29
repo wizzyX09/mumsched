@@ -15,7 +15,7 @@ public class Schedule implements Serializable{
     private Date generatedDate;
     private Date approvedDate;
     private String status;//should be an enum
-    @OneToOne
+    @OneToOne(mappedBy = "schedule")
     private Entry entry;
 
     public Integer getId() {

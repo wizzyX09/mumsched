@@ -32,4 +32,9 @@ public class IEntryServiceImpl implements IEntryService {
     public List<Entry> findAll() {
         return entryRepository.findAll();
     }
+
+    @Override
+    public List<Entry> findEntryWithoutSchedule() {
+        return entryRepository.findEntryWithoutSchedule();
+    }
 }

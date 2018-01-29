@@ -13,7 +13,7 @@ public class Course implements Serializable{
     private String name;
     @Enumerated(EnumType.STRING)
     private Specialization specialization;//should be an enum
-    @OneToMany
+    @ManyToMany
     private Set<Course> prerequisites;
 
     @ManyToMany(mappedBy = "preferredCourses")
