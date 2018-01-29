@@ -20,22 +20,25 @@
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>Course Code</th>
                             <th>Course Name</th>
-                            <th>Prerequisites</th>
+                            <th>Course Code</th>
+                            <th width="50%">Prerequisites</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <th:block th:each="course : ${allCourse}" >
                             <tr class="odd gradeX">
+                                <td th:inline="text">
+                                    <a th:href="@{'/detailsCourse/' + ${course.id}}">[[${course.name}]]</a>
+                                </td>
                                 <td th:text="${course.code}"></td>
-                                <td th:text="${course.name}"></td>
                                 <td>
-                                    <span th:each="prerequisite : ${course.prerequisites}"
-                                          th:inline="text" class="badge badge-primary">
-                                        [[${prerequisite.code}]] [[${prerequisite.name}]]
-                                    </span>
+                                    <a th:each="prerequisite : ${course.prerequisites}" th:inline="text"
+                                       class="badge badge-primary" th:href="@{'/detailsCourse/' + ${prerequisite.id}}">
+                                            [[${prerequisite.code}]] [[${prerequisite.name}]]
+                                        </a>
+                                    </a>
                                 </td>
                                 <td>
                                     <a th:href="@{'/updateCourse/' + ${course.id}}" class="btn btn-success btn-sm">Edit</a>&nbsp;

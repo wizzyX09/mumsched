@@ -52,4 +52,10 @@ public class CourseController {
         return "redirect:/allCourse";
     }
 
+    @GetMapping("/detailsCourse/{id}")
+    public String detailsCourseForm(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("course", iCourseService.findById(id));
+        return "course/details";
+    }
+
 }
