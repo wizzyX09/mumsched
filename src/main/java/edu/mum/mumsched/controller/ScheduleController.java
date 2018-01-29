@@ -5,7 +5,6 @@ import edu.mum.mumsched.repository.EntryRepository;
 import edu.mum.mumsched.repository.ScheduleRepository;
 import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IScheduleService;
-import javafx.concurrent.ScheduledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
