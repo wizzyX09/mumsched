@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+
 @Controller
 public class SectionController {
 
@@ -37,7 +39,7 @@ public class SectionController {
         model.addAttribute("sectionForm",new Section());
         model.addAttribute("blockList",iBlockService.findAll());
         model.addAttribute("courseList",iCoursesService.findAll());
-        //model.addAttribute("facultyList",null);
+        //model.addAttribute("facultyList", );
         return "section/form";
     }
 

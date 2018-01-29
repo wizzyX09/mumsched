@@ -42,9 +42,9 @@
                         <th:block th:each="section  : ${allSection}" >
                             <tr class="odd gradeX">
                                 <td th:text="${section.name}"></td>
-                                <td th:text="${section.block}" class="center"></td>
+                                <td th:text="${section.block.blockName }" class="center"></td>
 
-                                <td th:text="${section.course}"></td>
+                                <td th:text="${section.course.name}"></td>
                                 <td th:text="${section.faculty}"></td>
                                 <td th:text="${section.capacity}"></td>
                                 <td th:text="${section.students.size()}"></td>
