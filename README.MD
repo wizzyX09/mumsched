@@ -1,1 +1,0 @@
-[Heroku link](https://dry-temple-91732.herokuapp.com/)
