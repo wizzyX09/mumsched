@@ -41,7 +41,7 @@ public class ScheduleController {
     @PostMapping("/create")
     public String create(@ModelAttribute Schedule schedule) {
         System.out.println("Entry:" + schedule.getEntry().getId());
-        return "redirect:schedule/manage";
+        return "redirect:/schedule/manage";
     }
 
 

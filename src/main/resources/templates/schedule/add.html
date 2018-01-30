@@ -8,23 +8,33 @@
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-lg-12">
-            <form th:action="@{/schedule/create}" th:object="${schedule}" method="post">
-                <fieldset>
-                 <legend>Generate New Schedule</legend>
-                    <div class="form-group">
-                        <label>Entry </label>
-                        <select th:field="*{entry}" class="form-control" multiple>
-                            <option th:each="entry: ${entries}" th:value="${entry.id}"
-                                    th:text="${entry.id} + ' '+ ${entry.entryName}"></option>
-                        </select>
-                        <p class="help-block"></p>
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span >Generate New Schedule</span>
+                </div>
+                <div class="panel-body">
+                    <form th:action="@{/schedule/create}" th:object="${schedule}" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="entry" class="col-sm-3">Entry: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="entry"
+                                            th:field="*{entry}">
+                                        <option th:each="entry : ${entries}"
+                                                th:value="${entry.id}" th:text="${entry.entryName}"></option>
+                                    </select>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
 
-                    <p>
-                        <input id="btnAdd" class="btn btn-primary" type="submit" value="Generate" />
-                    </p>
-                </fieldset>
-            </form>
+                            <div class="text-center">
+                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Generate" />
+                                <a class="btn btn-default" th:href="@{/schedule/manage}">Cancel</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </th:block>
@@ -34,4 +44,3 @@
 
 </body>
 </html>
-

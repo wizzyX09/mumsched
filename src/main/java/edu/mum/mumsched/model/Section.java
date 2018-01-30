@@ -11,16 +11,17 @@ public class Section {
     private Integer id;
     private String name;
     private Integer capacity;
-    private Integer enrolled;
+    //@Transient
+    private Integer enrolled;//amount enrolled, make it transient
     private Integer availableSeats;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "section_student",
-            joinColumns = {@JoinColumn(name = "section_id")},
-            inverseJoinColumns = {@JoinColumn(name = "student_id")})
+            joinColumns = {@JoinColumn(name = "section_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName="id")})
     private Set<Student> students;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private Block block;
 
     @OneToOne
