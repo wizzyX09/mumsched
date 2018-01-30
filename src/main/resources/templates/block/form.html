@@ -18,9 +18,28 @@
                         <fieldset>
                             <input class="form-control"  type="hidden" th:field="*{id}" />
                             <div class="form-group">
+                                <label for="entry" class="col-sm-3">Entry: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="entry" th:field="*{entry}">
+                                        <option th:each="object : ${entryList}"
+                                                th:value="${object.id}" th:text="${object.entryName}"></option>
+                                    </select>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="blockName" class="col-sm-3">Block Name: </label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="blockName" type="text" th:field="*{blockName}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sequenceNumber" class="col-sm-3">Sequence Number: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="sequenceNumber" type="number" th:field="*{sequenceNumber}" />
                                     <p class="help-block"></p>
                                 </div>
                             </div>

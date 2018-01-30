@@ -20,6 +20,8 @@ public class Entry {
     private Schedule schedule;
     @OneToMany(mappedBy = "entry")
     private Set<Student> students;
+    @OneToMany(mappedBy = "entry")
+    private Set<Block> blocks;
 
     public Integer getId() {
         return id;

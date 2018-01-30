@@ -18,8 +18,11 @@ public class Block {
     private Date endDate;
     private int numberOfFppCourse;
     private int numberOfMppCourse;
+    private int sequenceNumber;
     @OneToMany(mappedBy = "block")
     private Set<Section> sections;
+    @OneToOne
+    private Entry entry;
 
     public int getId() {
         return id;
@@ -86,5 +89,19 @@ public class Block {
         }
     }
 
+    public Entry getEntry() {
+        return entry;
+    }
 
+    public void setEntry(Entry entry) {
+        this.entry = entry;
+    }
+
+    public int getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
 }
