@@ -15,6 +15,7 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
+    private String username;
     @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
     @OneToOne
@@ -76,6 +77,6 @@ public class Student {
         this.username = username;
     }
 
-    private String username;
+
 
 }
