@@ -26,8 +26,6 @@ public class SectionController {
     @Autowired
     IFacultyService iFacultyService;
 
-
-
     //Display manage section page, show listing of sections in db
     @RequestMapping(value="/manage",method = RequestMethod.GET)
     public String manageSection(Model model){
