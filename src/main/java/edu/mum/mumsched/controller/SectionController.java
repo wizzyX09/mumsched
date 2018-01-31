@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 
 @Controller
+@RequestMapping("/section")
 public class SectionController {
 
     @Autowired
@@ -28,13 +29,13 @@ public class SectionController {
 
 
     //Display manage section page, show listing of sections in db
-    @RequestMapping(value="/section/manage",method = RequestMethod.GET)
+    @RequestMapping(value="/manage",method = RequestMethod.GET)
     public String manageSection(Model model){
         model.addAttribute("allSection",iSectionService.findAll());
         return "section/manage";
     }
     //Display section Form
-    @RequestMapping(value="/section/form",method = RequestMethod.GET)
+    @RequestMapping(value="/form",method = RequestMethod.GET)
     public String addNewSection(Model model){
         model.addAttribute("sectionForm",new Section());
         model.addAttribute("blockList",iBlockService.findAll());
@@ -43,7 +44,7 @@ public class SectionController {
         return "section/form";
     }
 
-    @RequestMapping(value="/section/saveSection",method = RequestMethod.POST)
+    @RequestMapping(value="/saveSection",method = RequestMethod.POST)
     public String saveSection(@ModelAttribute("sectionForm") Section section,
                               Model model, RedirectAttributes redirectAttributes){
 
