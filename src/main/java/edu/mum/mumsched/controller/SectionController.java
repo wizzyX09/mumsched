@@ -3,6 +3,7 @@ package edu.mum.mumsched.controller;
 import edu.mum.mumsched.model.Section;
 import edu.mum.mumsched.service.IBlockService;
 import edu.mum.mumsched.service.ICourseService;
+import edu.mum.mumsched.service.IFacultyService;
 import edu.mum.mumsched.service.ISectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,8 @@ public class SectionController {
     IBlockService iBlockService;
     @Autowired
     ICourseService iCoursesService;
-
+    @Autowired
+    IFacultyService iFacultyService;
 
 
 
@@ -40,7 +42,7 @@ public class SectionController {
         model.addAttribute("sectionForm",new Section());
         model.addAttribute("blockList",iBlockService.findAll());
         model.addAttribute("courseList",iCoursesService.findAll());
-        //model.addAttribute("facultyList", );
+        model.addAttribute("facultyList", iFacultyService.findAll());
         return "section/form";
     }
 

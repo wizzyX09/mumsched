@@ -49,16 +49,17 @@
                         <p class="help-block"></p>
                     </div>
 
-                    <!--div class="form-group">
+                    <div class="form-group">
                         <label for="faculty">Faculty </label>
 
                         <select class="form-control" th:field="${sectionForm.faculty}" id="faculty">
                             <option value="0" >Select Faculty</option>
-                            <option th:each="faculty : ${facultyList}" th:value="${faculty.id}" th:text="${faculty.name}"></option>
+                            <option th:each="faculty : ${facultyList}" th:value="${faculty.id}"
+                                    th:text="${faculty.firstName +' '+ faculty.lastName}"></option>
                         </select>
 
                         <p class="help-block"></p>
-                    </div-->
+                    </div>
 
 
 
