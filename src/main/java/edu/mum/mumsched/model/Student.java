@@ -1,6 +1,7 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,11 +16,12 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
-    private String username;
     @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
     @OneToOne
     private Entry entry;
+    @Embedded
+    private List<Track> tracks;
 
     public Integer getId() {
         return id;
@@ -69,14 +71,23 @@ public class Student {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public Entry getEntry() {
+        return entry;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
 
+    public Set<Section> getSections() {
+        return sections;
+    }
 
+    public List<Track> getTracks() {
+        return tracks;
+    }
 
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
 }

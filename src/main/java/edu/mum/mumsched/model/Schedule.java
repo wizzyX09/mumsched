@@ -1,11 +1,9 @@
 package edu.mum.mumsched.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +13,7 @@ public class Schedule implements Serializable{
     private Date generatedDate;
     private Date approvedDate;
     private String status;//should be an enum
-    @OneToOne(mappedBy = "schedule")
+    @OneToOne(mappedBy = "schedule",cascade = CascadeType.ALL)
     private Entry entry;
 
     public Integer getId() {
@@ -56,5 +54,12 @@ public class Schedule implements Serializable{
 
     public void setApprovedDate(Date approvedDate) {
         this.approvedDate = approvedDate;
+    }
+    public Schedule generate(List<Course> courseList) throws Exception {
+        for(Block block:this.getEntry().getBlocks()){
+            block.createSections(courseList,this.getEntry());
+        }
+        this.getEntry().setSchedule(this);
+        return this;
     }
 }

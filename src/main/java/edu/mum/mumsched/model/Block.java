@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +19,8 @@ public class Block {
     private Date endDate;
     private int numberOfFppCourse;
     private int numberOfMppCourse;
-    @OneToMany(mappedBy = "block")
+    private int sequenceNumber;
+    @OneToMany(mappedBy = "block",cascade = CascadeType.ALL)
     private Set<Section> sections;
 
     public int getId() {
@@ -69,9 +71,18 @@ public class Block {
         this.numberOfMppCourse = numberOfMppCourse;
     }
 
+    public int getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
+
     public Set<Section> getSections() {
         return Collections.unmodifiableSet(sections);
     }
+
     public void addSection(Section section){
         if(section!=null) {
             sections.add(section);
@@ -87,4 +98,20 @@ public class Block {
     }
 
 
+    public void createSections(List<Course> courseList, Entry entry) throws Exception {
+        int seatsNeeded=entry.getFppNumber()+entry.getMppNumber();
+        while (seatsNeeded>0){
+            Course course=Course.bestCourse(courseList);
+            if(course==null)
+                throw new Exception("Not enough course available");
+            Section section=new Section();
+            section.setName(course.getName()+"-"+this.getBlockName());
+            section.setCourse(course);
+            section.setFaculty(course.getBestFaculty());
+            section.setCapacity(30);
+            course.getSections().add(section);
+            seatsNeeded-=30;
+            this.addSection(section);
+        }
+    }
 }

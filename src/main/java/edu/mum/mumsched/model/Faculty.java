@@ -12,12 +12,11 @@ public class Faculty {
     private String lastName;
     private Gender gender;
     private String email;
-    private String username;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "faculty_preferred_blocks",
+    @JoinTable(name = "faculty_unwanted_blocks",
             joinColumns = {@JoinColumn(name = "faculty_id")},
             inverseJoinColumns = {@JoinColumn(name = "block_id")})
-    private Set<Block> preferredBlocks;
+    private Set<Block> unwantedBlocks;
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;
     @ManyToMany(cascade = CascadeType.ALL)
@@ -74,20 +73,12 @@ public class Faculty {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public Set<Block> getUnwantedBlocks() {
+        return unwantedBlocks;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Set<Block> getPreferredBlocks() {
-        return preferredBlocks;
-    }
-
-    public void setPreferredBlocks(Set<Block> preferredBlocks) {
-        this.preferredBlocks = preferredBlocks;
+    public void setUnwantedBlocks(Set<Block> unwantedBlocks) {
+        this.unwantedBlocks = unwantedBlocks;
     }
 
     public Set<Section> getSections() {

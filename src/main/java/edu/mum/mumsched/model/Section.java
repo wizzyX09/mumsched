@@ -11,8 +11,7 @@ public class Section {
     private Integer id;
     private String name;
     private Integer capacity;
-    //@Transient
-    private Integer enrolled;//amount enrolled, make it transient
+    private Integer enrolled;//amount of enrolled student
     private Integer availableSeats;
 
     @ManyToMany(cascade = CascadeType.ALL)

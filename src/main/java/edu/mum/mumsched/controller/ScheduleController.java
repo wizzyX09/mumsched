@@ -1,6 +1,7 @@
 package edu.mum.mumsched.controller;
 
 import edu.mum.mumsched.model.Schedule;
+import edu.mum.mumsched.service.ICourseService;
 import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class ScheduleController {
     IEntryService iEntryService;
     @Autowired
     private IScheduleService iScheduleService;
+    @Autowired
+    private ICourseService iCourseService;
 
     @GetMapping("/manage")
     public String manage(Model model) {
@@ -27,7 +30,6 @@ public class ScheduleController {
 
     @GetMapping("/create")
     public String createForm(Model model) {
-        System.out.println("/schedule/create/get");
         model.addAttribute("schedule", new Schedule());
         model.addAttribute("entries", iEntryService.findEntryWithoutSchedule());
         return "schedule/add";
@@ -39,8 +41,13 @@ public class ScheduleController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Schedule schedule) {
-        System.out.println("Entry:" + schedule.getEntry().getId());
+    public String create(@ModelAttribute Schedule schedule,Model model) {
+        try {
+            iScheduleService.saveOrUpdate(schedule.generate(iCourseService.findAll()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("message","Schedule generated");
         return "redirect:/schedule/manage";
     }
 

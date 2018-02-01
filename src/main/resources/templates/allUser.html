@@ -15,7 +15,7 @@
                 <div class="panel-heading">
                     Available Users
                 </div>
-                <!-- /.panel-heading -->
+                <!-- /.panel-heading -->mumsched@localhost
                 <div class="panel-body">
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
@@ -31,7 +31,7 @@
                         <tbody>
                         <th:block th:each="user  : ${allUser}" >
                             <tr class="odd gradeX">
-                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.firstName}"></td>
                                 <td th:text="${user.lastName}" class="center"></td>
                                 <td th:text="${user.email}" class="center"></td>
                                 <td th:text="${user.rolesString}"></td>
