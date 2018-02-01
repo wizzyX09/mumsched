@@ -85,11 +85,6 @@
 			<artifactId>modelmapper-spring-boot-starter</artifactId>
 			<version>1.1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.modelmapper.extensions</groupId>
-			<artifactId>modelmapper-spring</artifactId>
-			<version>1.1.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>

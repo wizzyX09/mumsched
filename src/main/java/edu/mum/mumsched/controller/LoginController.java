@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	private UserService<User, UserForm> userService;
 
@@ -37,7 +37,7 @@ public class LoginController {
 		modelAndView.setViewName("users/registration");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid UserForm userForm, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -56,7 +56,7 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
@@ -68,15 +68,15 @@ public class LoginController {
 		return modelAndView;
 	}
 
-    @RequestMapping(value="/admin", method = RequestMethod.GET)
+	@RequestMapping(value="/admin", method = RequestMethod.GET)
 	public String admin(){
 		return "admin/admin";
 	}
 
-    @RequestMapping(value="/faculty", method = RequestMethod.GET)
-    public String faculty(){
-        return "faculty/faculty";
-    }
+	@RequestMapping(value="/faculty", method = RequestMethod.GET)
+	public String faculty(){
+		return "faculty/faculty";
+	}
 	@RequestMapping(value="/403", method = RequestMethod.GET)
 	public String accessDenied(){
 		return "403";
