@@ -22,6 +22,8 @@ public class Block {
     private int sequenceNumber;
     @OneToMany(mappedBy = "block",cascade = CascadeType.ALL)
     private Set<Section> sections;
+    @OneToOne
+    private Entry entry;
 
     public int getId() {
         return id;
@@ -97,6 +99,13 @@ public class Block {
         }
     }
 
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
+    }
 
     public void createSections(List<Course> courseList, Entry entry) throws Exception {
         int seatsNeeded=entry.getFppNumber()+entry.getMppNumber();

@@ -20,7 +20,7 @@ public class Section {
             inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName="id")})
     private Set<Student> students;
 
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne
     private Block block;
 
     @OneToOne

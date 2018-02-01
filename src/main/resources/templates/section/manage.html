@@ -6,17 +6,17 @@
 </th:block>
 
 <th:block layout:fragment="content">
-    <div>
-        <a class="btn btn-primary btn-sm" th:href="@{/section/form}">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
-        </a>
-        <br/>
-    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Available Sections
+                    Available Sections 
+                    <a class="btn btn-primary btn-sm" th:href="@{/section/form}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
+                    </a>
+
+
                     <br/>
                     <div id='hideMe' style="color:white;font-weight:bold;background-color:green" th:text="${message}"></div>
                 </div>
@@ -45,12 +45,12 @@
                                 <td th:text="${section.block.blockName }" class="center"></td>
 
                                 <td th:text="${section.course.name}"></td>
-                                <td th:text="${section.faculty}"></td>
+                                <td th:text="${section.faculty.firstName +' '+ section.faculty.lastName}"></td>
                                 <td th:text="${section.capacity}"></td>
                                 <td th:text="${section.students.size()}"></td>
                                 <td>
-                                    <a th:href="@{'/section/update/' + ${section.id}}">Edit</a>&nbsp;|&nbsp;
-                                    <a th:href="@{'/section/delete/' + ${section.id}}">Delete</a>
+                                    <a th:href="@{'/section/update/' + ${section.id}}" class="btn btn-success">Edit</a>
+                                    <a th:href="@{'/section/delete/' + ${section.id}}" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         </th:block>
