@@ -2,6 +2,7 @@ package edu.mum.mumsched.controller;
 
 
 import edu.mum.mumsched.model.User;
+import edu.mum.mumsched.model.UserForm;
 import edu.mum.mumsched.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 public class LoginController {
 	
 	@Autowired
-	private UserService userService;
+	private UserService<User, UserForm> userService;
 
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -31,16 +32,16 @@ public class LoginController {
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
-		User user = new User();
-		modelAndView.addObject("user", user);
+		UserForm userForm = new UserForm();
+		modelAndView.addObject("user", userForm);
 		modelAndView.setViewName("users/registration");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid UserForm userForm, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		User userExists = userService.findUserByEmail(user.getEmail());
+		UserForm userExists = userService.findByEmail(userForm.getEmail());
 		if (userExists != null) {
 			bindingResult
 					.rejectValue("email", "error.user", "There is already a user registered with the email provided");
@@ -48,7 +49,7 @@ public class LoginController {
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("users/registration");
 		} else {
-			userService.saveUser(user);
+			userService.save(userForm);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("users/registration");
@@ -60,8 +61,8 @@ public class LoginController {
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("message", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+		UserForm userForm = userService.findByEmail(auth.getName());
+		modelAndView.addObject("message", "Welcome " + userForm.getName() + " " + userForm.getLastName() + " (" + userForm.getEmail() + ")");
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
