@@ -13,11 +13,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+	//@Column(name = "user_id")
 	private int id;
 
 	@Column(name = "email")
@@ -42,9 +43,34 @@ public class User {
 	@Column(name = "active")
 	private boolean active;
 
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+
+	private String username;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public int getId() {
 		return id;
@@ -96,16 +122,6 @@ public class User {
 
 	public Set<Role> getRoles() {
 		return roles;
-	}
-
-	// to display the list of roles as a comma separated strings
-	public String getRolesString() {
-		List<String> listOfRoles = new ArrayList<>();
-		for(Role role : roles) {
-			listOfRoles.add(role.getRole());
-		}
-
-		return StringUtils.join(listOfRoles);
 	}
 
 	public void setRoles(Set<Role> roles) {
