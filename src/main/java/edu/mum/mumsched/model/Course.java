@@ -64,15 +64,15 @@ public class Course implements Serializable{
     }
 
     public Set<Course> getPrerequisites() {
-        return Collections.unmodifiableSet(prerequisites);
+        return prerequisites;
     }
 
     public Set<Faculty> getFaculties() {
-        return Collections.unmodifiableSet(faculties);
+        return faculties;
     }
 
     public Set<Section> getSections() {
-        return Collections.unmodifiableSet(sections);
+        return sections;
     }
     //conveniences methods
     public void addPrerequisite(Course course){
@@ -96,31 +96,48 @@ public class Course implements Serializable{
     }
 
     public void addSection(Section section){
-        if(section!=null)
+        if(section!=null) {
             sections.add(section);
+            section.setCourse(this);
+        }
     }
     public boolean removeSection(Section section){
-        if(section!=null)
-            return  sections.remove(section);
+        if(section!=null) {
+            section.setCourse(null);
+            return sections.remove(section);
+        }
         return false;
     }
 
 
 
-    public static Course bestCourse(List<Course> courseList) {
+    public static Course getBestCourse(List<Course> courseList) {
        return courseList.size()>0?courseList.remove(0):null;
     }
 
-    public Faculty getBestFaculty() {
-        Faculty faculty=null;
+    public Faculty getBestFaculty(Block block) {
+        if(this.getFaculties().isEmpty()) return null;
+        Faculty bestFaculty=this.getFaculties().iterator().next();
+        int sectionAlreadyTaught=bestFaculty.getSections().size();
         for (Faculty fac:this.getFaculties()){
-            faculty=fac;
-            this.getFaculties().remove(fac);
-            break;
+            int temp=fac.getSections().size();
+            if(sectionAlreadyTaught>temp && fac.isAvailable(block)) {
+                bestFaculty = fac;
+            }
         }
-        return faculty;
+
+        return bestFaculty;
     }
-    public Course getBestCourse(List<Course> courses){
-        return null;
+
+    public void setPrerequisites(Set<Course> prerequisites) {
+        this.prerequisites = prerequisites;
+    }
+
+    public void setFaculties(Set<Faculty> faculties) {
+        this.faculties = faculties;
+    }
+
+    public void setSections(Set<Section> sections) {
+        this.sections = sections;
     }
 }

@@ -112,10 +112,10 @@ public class Entry {
     }
 
     public Set<Student> getStudents() {
-        return Collections.unmodifiableSet(students);
+        return students;
     }
     public Set<Block> getBlocks() {
-        return Collections.unmodifiableSet(blocks);
+        return blocks;
     }
     //conveniences methods
     public void addStudent(Student student){
@@ -142,5 +142,13 @@ public class Entry {
             return  blocks.remove(block);
         }
         return false;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
+    public void setBlocks(Set<Block> blocks) {
+        this.blocks = blocks;
     }
 }

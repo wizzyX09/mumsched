@@ -1,7 +1,10 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @Entity
 public class Faculty {
     @Id
@@ -96,4 +99,17 @@ public class Faculty {
     public void setPreferredCourses(Set<Course> preferredCourses) {
         this.preferredCourses = preferredCourses;
     }
+    //it is not correct yet
+    public boolean isAvailable(Block block) {
+        List<Block> blocks = this.getUnwantedBlocks().stream().filter(bl -> bl.getBlockName().contains(block.getBlockName())).collect(Collectors.toList());
+        return blocks.size() == 0 ? true : false;
+    }
+
+    public void addSection(Section section){
+        if(section!=null){
+            section.setFaculty(this);
+            this.sections.add(section);
+        }
+    }
+
 }

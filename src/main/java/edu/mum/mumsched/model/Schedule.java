@@ -62,4 +62,5 @@ public class Schedule implements Serializable{
         this.getEntry().setSchedule(this);
         return this;
     }
+
 }

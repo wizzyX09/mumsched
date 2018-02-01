@@ -90,4 +90,8 @@ public class Student {
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
+
+    public void setSections(Set<Section> sections) {
+        this.sections = sections;
+    }
 }
