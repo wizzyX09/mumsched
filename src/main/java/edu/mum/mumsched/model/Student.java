@@ -5,29 +5,14 @@ import java.util.Set;
 
 @Entity
 @Table(name="student")
-public class Student {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Student extends User {
     private Integer studentId;
-    private String firstName;
-    private String lastName;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    private String email;
-    private String username;
+
     @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
+
     @OneToOne
     private Entry entry;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getStudentId() {
         return studentId;
@@ -37,46 +22,19 @@ public class Student {
         this.studentId = studentId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Set<Section> getSections() {
+        return sections;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setSections(Set<Section> sections) {
+        this.sections = sections;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Entry getEntry() {
+        return entry;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-
-
 }
