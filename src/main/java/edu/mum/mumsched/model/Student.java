@@ -6,30 +6,24 @@ import java.util.Set;
 
 @Entity
 @Table(name="student")
-public class Student {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Student extends User {
     private Integer studentId;
+<<<<<<< HEAD
     private String firstName;
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
+=======
+
+>>>>>>> 971d3ff... user changes related to inheritance
     @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
+
     @OneToOne
     private Entry entry;
     @Embedded
     private List<Track> tracks;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getStudentId() {
         return studentId;
@@ -39,21 +33,22 @@ public class Student {
         this.studentId = studentId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Set<Section> getSections() {
+        return sections;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setSections(Set<Section> sections) {
+        this.sections = sections;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Entry getEntry() {
+        return entry;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
+<<<<<<< HEAD
 
     public Gender getGender() {
         return gender;
@@ -90,4 +85,6 @@ public class Student {
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
+=======
+>>>>>>> 971d3ff... user changes related to inheritance
 }
