@@ -11,7 +11,7 @@ public class UserForm {
     private int id;
     private String email;
     private String password;
-    private String name;
+    private String firstName;
     private String lastName;
     private String gender;
     private boolean active;
@@ -41,12 +41,12 @@ public class UserForm {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -130,7 +130,7 @@ public class UserForm {
 
         user.setId(id);
         user.setEmail(email);
-        user.setName(name);
+        user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setPassword(password);
         user.setRoles(roles);

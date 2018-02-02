@@ -63,7 +63,7 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		UserForm userForm = userService.findByEmail(auth.getName());
-		modelAndView.addObject("message", "Welcome " + userForm.getName() + " " + userForm.getLastName() + " (" + userForm.getEmail() + ")");
+		modelAndView.addObject("message", "Welcome " + userForm.getFirstName() + " " + userForm.getLastName() + " (" + userForm.getEmail() + ")");
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}

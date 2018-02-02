@@ -12,7 +12,6 @@ public class Faculty extends User {
             joinColumns = {@JoinColumn(name = "faculty_id")},
             inverseJoinColumns = {@JoinColumn(name = "block_id")})
     private Set<Block> unwantedBlocks;
-    private Set<Block> preferredBlocks;
 
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;

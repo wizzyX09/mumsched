@@ -16,7 +16,7 @@ public class UserEntityToFormMapping extends ConverterConfigurerSupport<User, Us
             protected UserForm convert(User user) {
                 UserForm userForm = new UserForm();
                 userForm.setId(user.getId());
-                userForm.setName(user.getName());
+                userForm.setFirstName(user.getFirstName());
                 userForm.setLastName(user.getLastName());
                 userForm.setEmail(user.getEmail());
                 userForm.setPassword(user.getPassword());
