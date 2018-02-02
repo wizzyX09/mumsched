@@ -4,6 +4,7 @@ import edu.mum.mumsched.model.Student;
 
 import java.util.List;
 
+// Todo delete this class
 public interface IStudentService {
     public Student findById(Integer studentId);
     public void delete(Integer studentId);

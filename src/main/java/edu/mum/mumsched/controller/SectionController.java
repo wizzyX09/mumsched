@@ -1,10 +1,9 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.model.Faculty;
 import edu.mum.mumsched.model.Section;
-import edu.mum.mumsched.service.IBlockService;
-import edu.mum.mumsched.service.ICourseService;
-import edu.mum.mumsched.service.IFacultyService;
-import edu.mum.mumsched.service.ISectionService;
+import edu.mum.mumsched.model.UserForm;
+import edu.mum.mumsched.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +23,8 @@ public class SectionController {
     @Autowired
     ICourseService iCoursesService;
     @Autowired
-    IFacultyService iFacultyService;
-
+    UserService<Faculty, UserForm> facultyService;
+    
     //Display manage section page, show listing of sections in db
     @RequestMapping(value="/manage",method = RequestMethod.GET)
     public String manageSection(Model model){
@@ -38,7 +37,7 @@ public class SectionController {
         model.addAttribute("sectionForm",new Section());
         model.addAttribute("blockList",iBlockService.findAll());
         model.addAttribute("courseList",iCoursesService.findAll());
-        model.addAttribute("facultyList", iFacultyService.findAll());
+        model.addAttribute("facultyList", facultyService.findAll());
         model.addAttribute("title","Adding New Section");
 
         return "section/form";
@@ -59,7 +58,7 @@ public class SectionController {
         model.addAttribute("sectionForm",iSectionService.findById(id));
         model.addAttribute("blockList",iBlockService.findAll());
         model.addAttribute("courseList",iCoursesService.findAll());
-        model.addAttribute("facultyList", iFacultyService.findAll());
+        model.addAttribute("facultyList", facultyService.findAll());
         model.addAttribute("title","Updating Section");
         return "section/form";
     }
