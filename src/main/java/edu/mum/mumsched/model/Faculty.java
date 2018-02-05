@@ -23,6 +23,13 @@ public class Faculty {
     @Enumerated(EnumType.STRING)
     private Specialization specialization;
     //faculty sections
+
+    /* @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "faculty_unwanted_blocks",
+            joinColumns = {@JoinColumn(name = "faculty_id")},
+            inverseJoinColumns = {@JoinColumn(name = "block_id")})
+    private Set<Block> unwantedBlocks; */
+
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;
     //faculty course preferences
