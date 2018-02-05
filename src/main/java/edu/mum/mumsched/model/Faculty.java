@@ -16,13 +16,16 @@ public class Faculty {
     private Gender gender;
     @Column(unique = true)
     private String email;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "faculty_unwanted_blocks",
-            joinColumns = {@JoinColumn(name = "faculty_id")},
-            inverseJoinColumns = {@JoinColumn(name = "block_id")})
-    private Set<Block> unwantedBlocks;
+    //faculty account
+    @OneToOne
+    private User user;
+    //faculty specialization track
+    @Enumerated(EnumType.STRING)
+    private Specialization specialization;
+    //faculty sections
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;
+    //faculty course preferences
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "faculty_courses",
             joinColumns = {@JoinColumn(name = "faculty_id")},
@@ -76,14 +79,6 @@ public class Faculty {
         this.email = email;
     }
 
-    public Set<Block> getUnwantedBlocks() {
-        return unwantedBlocks;
-    }
-
-    public void setUnwantedBlocks(Set<Block> unwantedBlocks) {
-        this.unwantedBlocks = unwantedBlocks;
-    }
-
     public Set<Section> getSections() {
         return sections;
     }
@@ -99,6 +94,24 @@ public class Faculty {
     public void setPreferredCourses(Set<Course> preferredCourses) {
         this.preferredCourses = preferredCourses;
     }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Specialization getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
     //it is not correct yet
     public boolean isAvailable(Block block) {
         return true;

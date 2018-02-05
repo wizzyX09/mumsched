@@ -14,11 +14,15 @@ public class Section {
     private Integer enrolled;//amount of enrolled student
     private Integer availableSeats;
 
+    //students enrolled for section
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "section_student",
             joinColumns = {@JoinColumn(name = "section_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName="id")})
     private Set<Student> students;
+    //schedule of section
+    @ManyToOne
+   private Schedule schedule;
 
     @OneToOne
     private Block block;
@@ -102,5 +106,13 @@ public class Section {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 }

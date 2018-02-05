@@ -17,7 +17,7 @@ public class Block {
     private int id;
 
     @NotEmpty(message = "Specify block name")
-    private String blockName;
+    private String blockName;//must be unique
     private Date startDate;
     private Date endDate;
     private int numberOfFppCourse;
@@ -25,8 +25,6 @@ public class Block {
     private int sequenceNumber;
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL)
     private Set<Section> sections;
-    @OneToOne
-    private Entry entry;
 
     public int getId() {
         return id;
@@ -88,6 +86,10 @@ public class Block {
         return sections;
     }
 
+    public void setSections(Set<Section> sections) {
+        this.sections = sections;
+    }
+
     public void addSection(Section section) {
         if (section != null) {
             sections.add(section);
@@ -102,103 +104,73 @@ public class Block {
         }
     }
 
-    public Entry getEntry() {
-        return entry;
-    }
-
-    public void setEntry(Entry entry) {
-        this.entry = entry;
-    }
-
     public void createSections(List<Course> courseList, Entry entry) throws Exception {
-
         //Now compute how many more seats are needed
         int seatsNeeded = entry.getFppNumber() + entry.getMppNumber();
-        if(seatsNeeded<=0)
+        if (seatsNeeded <= 0)
             throw new Exception("The MPP and FPP projection is incorrect, edit the entry details to proceed");
-
         //than check how many FPP sections are needed
-        if(numberOfFppCourse>0){
-            Course fpp=courseList.stream().filter(c->c.getName().contains("FPP")).findFirst().get();
-           if(fpp==null) {
-               throw new Exception("This block require FPP section, block name: "+this.getBlockName()+", But No FPP course in database");
-           }
-           int temp=this.numberOfFppCourse;
-           while (temp>0){
-               Section sect=new Section ();
-               sect.setName(fpp.getName()+"-"+this.getBlockName()+"-"+temp);
-               sect.setCapacity(fpp.getInitialCapacity());
-               sect.setEnrolled(0);
-               sect.setAvailableSeats(fpp.getInitialCapacity());
-               fpp.addSection(sect);
-               this.addSection(sect);
-               Faculty fact=fpp.getBestFaculty(this);
-               if(fact!=null)
-                   fact.addSection(sect);
-              temp--;
-               seatsNeeded-=sect.getCapacity();
-           }
+        if (numberOfFppCourse > 0) {
+            Course fpp = courseList.stream().filter(c -> c.getName().contains("FPP")).findFirst().get();
+            if (fpp == null) {
+                throw new Exception("This block require FPP section, block name: " + this.getBlockName() + ", But No FPP course in database");
+            }
+            int temp = this.numberOfFppCourse;
+            while (temp > 0) {
+                Section sect = addSection(fpp, temp);
+                seatsNeeded -= sect.getCapacity();
+                temp--;
+            }
 
         }//end of ffp section creation
 
         //than check how many MPP sections are needed
-        if(numberOfMppCourse>0){
-            Course mpp=courseList.stream().filter(c->c.getName().contains("MPP")).findFirst().get();
-            if(mpp==null) {
-                throw new Exception("This block require MPP section, block name: "+this.getBlockName()+", But No MPP course in database");
+        if (numberOfMppCourse > 0) {
+            Course mpp = courseList.stream().filter(c -> c.getName().contains("MPP")).findFirst().get();
+            if (mpp == null) {
+                throw new Exception("This block require MPP section, block name: " + this.getBlockName() + ", But No MPP course in database");
             }
-            int temp=this.numberOfMppCourse;
-            while (temp>0){
-                Section sect=new Section ();
-                sect.setName(mpp.getName()+"-"+this.getBlockName()+"-"+temp);
-                sect.setCapacity(mpp.getInitialCapacity());
-                sect.setEnrolled(0);
-                sect.setAvailableSeats(mpp.getInitialCapacity());
-                mpp.addSection(sect);
-                this.addSection(sect);
-                Faculty fact=mpp.getBestFaculty(this);
-                if(fact!=null)
-                    fact.addSection(sect);
+            int temp = this.numberOfMppCourse;
+            while (temp > 0) {
+                Section sect = addSection(mpp, temp);
                 temp--;
-                seatsNeeded-=sect.getCapacity();
+                seatsNeeded -= sect.getCapacity();
             }
 
         }//end of mpp section creation
 
-     if(seatsNeeded<=0)
-         return ;
-
-
+        if (seatsNeeded <= 0)
+            return;
         //if the block as previous section , compute available seats
         int seatsAlreadyAvailable = 0;
         for (Section temp : this.getSections()) {
-            if(!temp.getName().contains("MPP")&&!temp.getName().contains("FPP"))
-            seatsAlreadyAvailable+=temp.getAvailableSeats();
+            if (!temp.getName().contains("MPP") && !temp.getName().contains("FPP"))
+                seatsAlreadyAvailable += temp.getAvailableSeats();
         }
-
         //create extra section
-        seatsNeeded-=seatsAlreadyAvailable;
-         int temp=0;
+        seatsNeeded -= seatsAlreadyAvailable;
+        int temp = 0;
         while (seatsNeeded > 0) {
             Course course = Course.getBestCourse(courseList);
             if (course == null)
                 throw new Exception("Not enough course available");
-            Section sect=new Section ();
-            sect.setName(course.getName()+"-"+this.getBlockName()+"-"+temp);
-            sect.setCapacity(course.getInitialCapacity());
-            sect.setEnrolled(0);
-            sect.setAvailableSeats(course.getInitialCapacity());
-            course.addSection(sect);
-            this.addSection(sect);
-            Faculty fact=course.getBestFaculty(this);
-            if(fact!=null)
-                fact.addSection(sect);
+            Section sect = addSection(course, temp);
             temp++;
-            seatsNeeded-=sect.getCapacity();
+            seatsNeeded -= sect.getCapacity();
         }//done created extra course
     }
 
-    public void setSections(Set<Section> sections) {
-        this.sections = sections;
+    public Section addSection(Course course, int counter) {
+        Section sect = new Section();
+        sect.setName(course.getName() + "-" + this.getBlockName() + "-" + counter);
+        sect.setCapacity(course.getInitialCapacity());
+        sect.setEnrolled(0);
+        sect.setAvailableSeats(course.getInitialCapacity());
+        course.addSection(sect);
+        this.addSection(sect);
+        Faculty fact = course.getBestFaculty(this);
+        if (fact != null)
+            fact.addSection(sect);
+        return sect;
     }
 }

@@ -20,7 +20,7 @@
                         Status
                         <select>
                         <option th:value="DRAFT" th:text="*{schedule.status}"></option>
-                        <option th:value="DRAFT" th:text="APPROVED"></option>
+                        <option th:value="APPROVED" th:text="APPROVED"></option>
                       </select>
                     </div>
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -33,11 +33,13 @@
                                 <td></td>
                                 <td ></td>
                                 <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td >Section Name</td>
                                 <td >Course</td>
+                                <td >Faculty</td>
                                 <td>Capacity</td>
                                 <td >Enrolled</td>
                                 <td>Available</td>
@@ -47,6 +49,7 @@
                                         <td></td>
                                         <td th:text="${section.name}">Section Name</td>
                                         <td th:text="${section.course.name}">Course</td>
+                                        <td th:text="${section.faculty.firstName}">Faculty</td>
                                         <td th:text="${section.capacity}">Capacity</td>
                                         <td th:text="${section.enrolled}">Enrolled</td>
                                         <td th:text="${section.availableSeats}">Available</td>

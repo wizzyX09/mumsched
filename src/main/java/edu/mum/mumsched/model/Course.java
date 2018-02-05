@@ -14,8 +14,8 @@ public class Course implements Serializable{
     private String code;
     private String name;
     private int initialCapacity;
-  /*  @Enumerated(EnumType.STRING)
-    private Specialization specialization;//should be an enum*/
+    @Enumerated(EnumType.STRING)
+    private Specialization specialization;
     @ManyToMany
     private Set<Course> prerequisites;
     @ManyToMany(mappedBy = "preferredCourses")
@@ -55,14 +55,13 @@ public class Course implements Serializable{
         this.initialCapacity = initialCapacity;
     }
 
-   /* public Specialization getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
 
     public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
-*/
     public Set<Course> getPrerequisites() {
         return prerequisites;
     }

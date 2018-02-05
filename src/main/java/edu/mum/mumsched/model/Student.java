@@ -16,12 +16,21 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
+    //enrolled sections
     @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
+    //student entry
     @OneToOne
     private Entry entry;
-    @Embedded
-    private List<Track> tracks;
+    //student study track
+    @Enumerated(EnumType.STRING)
+    private StudyTrack studyTrack;
+    //student work track
+    @Enumerated(EnumType.STRING)
+    private WorkTrack workTrack;
+    //student account
+    @OneToOne
+    private User user;
 
     public Integer getId() {
         return id;
@@ -83,15 +92,31 @@ public class Student {
         return sections;
     }
 
-    public List<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(List<Track> tracks) {
-        this.tracks = tracks;
-    }
-
     public void setSections(Set<Section> sections) {
         this.sections = sections;
+    }
+
+    public StudyTrack getStudyTrack() {
+        return studyTrack;
+    }
+
+    public void setStudyTrack(StudyTrack studyTrack) {
+        this.studyTrack = studyTrack;
+    }
+
+    public WorkTrack getWorkTrack() {
+        return workTrack;
+    }
+
+    public void setWorkTrack(WorkTrack workTrack) {
+        this.workTrack = workTrack;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
