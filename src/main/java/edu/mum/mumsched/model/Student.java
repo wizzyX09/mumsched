@@ -15,6 +15,7 @@ public class Student {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Column(unique = true)
     private String email;
     //enrolled sections
     @ManyToMany(mappedBy = "students")

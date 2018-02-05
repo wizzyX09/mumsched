@@ -9,4 +9,5 @@ public interface IStudentService {
     public void delete(Integer studentId);
     public void save(Student student);
     public List<Student> findAll();
+    public List<Student> findAllByUserIsNull();
 }

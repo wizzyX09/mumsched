@@ -29,14 +29,14 @@ public class UserController {
     @GetMapping("/allUsers")
     public String findAll(Model model) {
         model.addAttribute("allUser", userService.findAll());
-        return "allUser";
+        return "user/allUser";
     }
 
     @GetMapping("/newUser")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("listOfRoles", iRoleService.findAll());
-        return "addUserForm";
+        return "user/addUserForm";
     }
 
     @PostMapping("/saveUser")

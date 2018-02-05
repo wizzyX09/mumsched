@@ -7,7 +7,12 @@
 
 <th:block layout:fragment="content">
     <div>
-        <a class="btn btn-primary" th:href="@{/newUser}">Add New</a>
+        <a class="btn btn-primary" th:href="@{/newUser}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
+        </a>
+        <a class="btn btn-primary" th:href="@{/user/accountType}">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Generate Account
+        </a>
     </div>
     <div class="row">
         <div class="col-lg-12">
