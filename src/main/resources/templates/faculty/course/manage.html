@@ -14,6 +14,27 @@
                     Preferred Course Selection Page
                 </div>
                 <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <form th:action="@{/faculty/course/add}" th:object="${preferredCourse}" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="course" class="col-sm-3">Course: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="course" th:field="*{id}">
+                                        <option th:each="course : ${courseList}"
+                                                th:value="${course.id}" th:text="${course.name}">
+                                        </option>
+                                    </select>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Add" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
