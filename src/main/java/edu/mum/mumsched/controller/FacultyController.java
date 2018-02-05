@@ -76,6 +76,8 @@ public class FacultyController {
 
     @GetMapping("/profile")
     public String displayFacultyProfile(Model model) {
+        Faculty faculty = getLoggedInFaculty();
+        model.addAttribute("faculty", faculty);
         return "faculty/profile/manage";
     }
 
