@@ -101,8 +101,9 @@ public class Faculty {
     }
     //it is not correct yet
     public boolean isAvailable(Block block) {
-        List<Block> blocks = this.getUnwantedBlocks().stream().filter(bl -> bl.getBlockName().contains(block.getBlockName())).collect(Collectors.toList());
-        return blocks.size() == 0 ? true : false;
+        return true;
+        /*List<Block> blocks = this.getUnwantedBlocks().stream().filter(bl -> bl.getBlockName().contains(block.getBlockName())).collect(Collectors.toList());
+        return blocks.size() == 0 ? true : false;*/
     }
 
     public void addSection(Section section){
