@@ -15,11 +15,14 @@ public class Student {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Column(unique = true)
     private String email;
     @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
     @OneToOne
     private Entry entry;
+    @OneToOne
+    private User user;
     @Embedded
     private List<Track> tracks;
 
@@ -93,5 +96,13 @@ public class Student {
 
     public void setSections(Set<Section> sections) {
         this.sections = sections;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

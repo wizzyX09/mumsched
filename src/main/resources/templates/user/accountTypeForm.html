@@ -1,0 +1,46 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Select Account Type
+                </div>
+                <div class="panel-body">
+                    <form th:action="@{/user/generateAccount}" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="accountType" class="col-sm-3">Account Type: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="accountType" name="accountType" >
+                                        <option value="STUDENT">Student</option>
+                                        <option value="FACULTY">Faculty</option>
+                                        <option value="ADMIN">Admin</option>
+                                    </select>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Continue" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>
+

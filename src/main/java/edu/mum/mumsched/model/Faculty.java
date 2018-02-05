@@ -14,6 +14,7 @@ public class Faculty {
     private String firstName;
     private String lastName;
     private Gender gender;
+    @Column(unique = true)
     private String email;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "faculty_unwanted_blocks",
