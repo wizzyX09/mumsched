@@ -6,21 +6,45 @@
 </th:block>
 
 <th:block layout:fragment="content">
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Edit faculty profile
+                    <span>Faculty Profile</span>
                 </div>
-                <!-- /.panel-heading -->
-                <!-- /.panel-body -->
+                <div class="panel-body">
+                    <!-- <form th:action="@{/saveBlock}" th:object="${faculty}" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="firstName" class="col-sm-3">First Name: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="firstName" type="text" th:field="*{firstName}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName" class="col-sm-3">Last Name: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="lastName" type="text" th:field="*{lastName}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3">Email: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="email" type="text" th:field="*{email}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form> -->
+                </div>
             </div>
-            <!-- /.panel -->
         </div>
-        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.row -->
 </th:block>
 
 <th:block layout:fragment="footer">
@@ -28,3 +52,4 @@
 
 </body>
 </html>
+
