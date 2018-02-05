@@ -31,4 +31,9 @@ public class IFacultyServiceImp implements IFacultyService {
     public List<Faculty> findAll() {
         return facultyRepository.findAll();
     }
+
+    @Override
+    public Faculty findByEmail(String email) {
+        return facultyRepository.findFacultyByEmail(email);
+    }
 }

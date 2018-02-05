@@ -9,4 +9,5 @@ public interface IFacultyService {
     public void delete(Integer facultyId);
     public void save(Faculty faculty);
     public List<Faculty> findAll();
+    public Faculty findByEmail(String email);
 }
