@@ -7,10 +7,7 @@ import edu.mum.mumsched.service.IScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/schedule")
@@ -35,9 +32,12 @@ public class ScheduleController {
         return "schedule/add";
     }
 
-    @GetMapping("/edit")
-    public String editForm(Model model) {
-        return "redirect:schedule/edit";
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable Integer id, Model model) {
+        Schedule schedule=iScheduleService.findById(id);
+        if(schedule==null)return "redirect:/schedule/manage";
+        model.addAttribute("schedule",schedule);
+        return "schedule/edit";
     }
 
     @PostMapping("/create")

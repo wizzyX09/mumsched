@@ -43,7 +43,7 @@ public class User {
 	private boolean active;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_role", joinColumns =@JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
 	public int getId() {
@@ -66,8 +66,12 @@ public class User {
 		return firstName;
 	}
 
-	public void setFirstName(String name) {
-		this.firstName = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public boolean isActive() {
+		return active;
 	}
 
 	public String getLastName() {

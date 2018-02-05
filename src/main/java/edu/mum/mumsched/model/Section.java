@@ -23,10 +23,10 @@ public class Section {
     @OneToOne
     private Block block;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST})
     private Faculty faculty;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST})
     private Course course;
 
     public Section() {
