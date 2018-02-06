@@ -5,6 +5,7 @@ import edu.mum.mumsched.model.BlockMonths;
 import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.model.Faculty;
 import edu.mum.mumsched.service.ICourseService;
+import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IFacultyService;
 import edu.mum.mumsched.util.MonthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class FacultyController {
 
     @Autowired
     IFacultyService iFacultyService;
+
+    @Autowired
+    IEntryService iEntryService;
 
     @GetMapping("/course")
     public String displayPreferredCourses(Model model) {
@@ -140,6 +144,7 @@ public class FacultyController {
 
     @GetMapping("/schedule")
     public String viewSchedule(Model model) {
+        model.addAttribute("entries", iEntryService.findAll());
         return "faculty/schedule/view";
     }
 
