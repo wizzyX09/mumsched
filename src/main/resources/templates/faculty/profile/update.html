@@ -13,7 +13,7 @@
                     <span>Faculty Profile</span>
                 </div>
                 <div class="panel-body">
-                    <!-- <form th:action="@{/saveBlock}" th:object="${faculty}" method="post">
+                    <form th:action="@{../faculty/saveFacultyProfile}" th:object="${faculty}" method="post">
                         <fieldset>
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-3">First Name: </label>
@@ -39,8 +39,13 @@
                                 </div>
                             </div>
 
+                            <div class="text-center">
+                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Save" />
+                                <a class="btn btn-default" th:href="@{/faculty/profile}">Cancel</a>
+                            </div>
+
                         </fieldset>
-                    </form> -->
+                    </form>
                 </div>
             </div>
         </div>

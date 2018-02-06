@@ -47,8 +47,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Unwanted Blocks: </label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">
+                                <li th:each="unwantedBlock : ${faculty.unwantedBlocks}" th:text="${unwantedBlock}">
+                                </li>
+                                </p>
+                            </div>
+                        </div>
+
                         <div class="text-center">
-                            <a th:href="@{'../faculty/profile-update'}" class="btn btn-success">Edit</a>
+                            <a th:href="@{'/faculty/profile-update'}" class="btn btn-success">Edit</a>
                         </div>
                     </div>
                     <div class="col-lg-2">
