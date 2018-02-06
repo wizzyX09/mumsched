@@ -18,7 +18,6 @@
                             <input class="form-control"  type="hidden" th:field="*{id}"/>
                             <input class="form-control"  type="hidden" th:field="*{facultyID}"/>
                             <input class="form-control"  type="hidden" th:field="*{gender}" />
-                            <input class="form-control"  type="hidden" th:field="*{specialization}"/>
                             <input class="form-control"  type="hidden" th:field="*{unwantedBlocks}" />
                             <input class="form-control"  type="hidden" th:field="*{preferredCourses}" />
                             <input class="form-control"  type="hidden" th:field="*{sections}" />
@@ -44,6 +43,18 @@
                                 <label for="email" class="col-sm-3">Email: </label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="email" type="text" th:field="*{email}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="section" class="col-sm-3">Specialization: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="section" th:field="*{specialization}">
+                                        <option th:each="spec : ${specializations}"
+                                                th:value="${spec}" th:text="${spec}">
+                                        </option>
+                                    </select>
                                     <p class="help-block"></p>
                                 </div>
                             </div>
