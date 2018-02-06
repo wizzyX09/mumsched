@@ -35,7 +35,7 @@ public class StudentController {
         entry.getBlocks();
         System.out.println("entry **********************************  ************  " +  entry.getEntryName() + " - " + entry.getMppNumber());
 
-        List<Section> sectionList = sectionRegistrationFacade.sectionList();
+        List<Section> sectionList = sectionRegistrationFacade.findAll();
         Set<Section> studentSections = student.getSections();
 
         for (Section sSec:studentSections) {

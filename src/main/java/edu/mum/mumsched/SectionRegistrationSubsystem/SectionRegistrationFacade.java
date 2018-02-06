@@ -13,7 +13,7 @@ class SectionRegistrationFacade implements ISectionRegistrationSubsystem {
     @Autowired
     ISectionService iSectionService;
     @Override
-    public List<Section> sectionList() {
+    public List<Section> findAll() {
         return iSectionService.findAll();
     }
 

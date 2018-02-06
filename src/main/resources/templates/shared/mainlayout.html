@@ -239,6 +239,18 @@
                         </ul>
                     </li>
 
+                    <li sec:authorize="hasAuthority('STUDENT')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Section Registration<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="@{/student/register}">Register</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <!-- menu -->
                 </ul>
             </div>
