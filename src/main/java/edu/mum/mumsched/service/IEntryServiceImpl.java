@@ -1,5 +1,6 @@
 package edu.mum.mumsched.service;
 
+import edu.mum.mumsched.model.Block;
 import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.repository.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,15 @@ public class IEntryServiceImpl implements IEntryService {
     }
 
     @Override
+    public List<Entry> findAllOrdered() { return entryRepository.findAllByOrderByStartDateAsc(); }
+
+    @Override
     public List<Entry> findEntryWithoutSchedule() {
         return entryRepository.findEntryWithoutSchedule();
+    }
+
+    @Override
+    public List<Entry> findEntriesByBlocksContains(Block block) {
+        return entryRepository.findEntriesByBlocksContains(block);
     }
 }

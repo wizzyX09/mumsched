@@ -12,6 +12,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,7 +56,8 @@ public class UserController {
     @GetMapping("/newUser")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("listOfRoles", iRoleService.findAll());
+        model.addAttribute("listOfRoles", iRoleService.findAllExcept(ROLE_STUDENT, ROLE_FACULTY));
+//        model.addAttribute("listOfRoles", iRoleService.findAll());
         return "user/form";
     }
 

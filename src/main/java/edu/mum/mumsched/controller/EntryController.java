@@ -1,6 +1,7 @@
 package edu.mum.mumsched.controller;
 
 import edu.mum.mumsched.model.Entry;
+import edu.mum.mumsched.service.IBlockService;
 import edu.mum.mumsched.service.IEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,20 +20,27 @@ public class EntryController {
     @Autowired
     private IEntryService iEntryService;
 
+    @Autowired
+    private IBlockService iBlockService;
+
     @GetMapping("/allEntry")
     public String findAll(Model model){
-        model.addAttribute("allEntry",iEntryService.findAll());
+        model.addAttribute("allEntry",iEntryService.findAllOrdered());
         return "entry/manage";
     }
 
     @GetMapping("/newEntry")
     public String addEntryForm(Model model){
         model.addAttribute("entry",new Entry());
+        model.addAttribute("blockList", iBlockService.findAllByOrdered());
         return "entry/form";
     }
 
     @GetMapping("/deleteEntry/{id}")
     public String deleteEntryForm(@PathVariable("id") Integer id){
+        Entry entry = iEntryService.findById(id);
+        entry.setBlocks(null);
+        iEntryService.save(entry);
         iEntryService.delete(id);
         return "redirect:/allEntry";
     }
@@ -40,6 +48,7 @@ public class EntryController {
     @GetMapping("/updateEntry/{id}")
     public String updateEntryForm(@PathVariable("id") Integer id,Model model){
         model.addAttribute("entry",iEntryService.findById(id));
+        model.addAttribute("blockList", iBlockService.findAllByOrdered());
         return "entry/form";
     }
 

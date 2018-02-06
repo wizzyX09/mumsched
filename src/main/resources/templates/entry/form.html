@@ -42,6 +42,30 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="percentOpt" class="col-sm-3">percent of OPT track: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="percentOpt" type="number" th:field="*{percentOpt}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="percentCpt" class="col-sm-3">percent of CPT track: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="percentCpt" type="number" th:field="*{percentCpt}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="percentUsResident" class="col-sm-3">percent of US Resident: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="percentUsResident" type="number" th:field="*{percentUsResident}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="startDate" class="col-sm-3">Start Date: </label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="startDate" type="date" th:field="*{startDate}" />
@@ -56,6 +80,19 @@
                                     <p class="help-block"></p>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="blocks" class="col-sm-3">Blocks: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="blocks"
+                                            th:field="*{blocks}" multiple="multiple" style="height:15em">
+                                        <option th:each="object : ${blockList}"
+                                                th:value="${object.id}" th:text="${object.blockName}"></option>
+                                    </select>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
                             <div class="text-center">
                                 <input id="btnAdd" class="btn btn-primary" type="submit" value="Save" />
                                 <a class="btn btn-default" th:href="@{/allEntry}">Cancel</a>

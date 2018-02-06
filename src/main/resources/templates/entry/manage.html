@@ -25,6 +25,7 @@
                             <th>MPP Number</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Blocks</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -32,10 +33,16 @@
                         <th:block th:each="entry  : ${allEntry}" >
                             <tr class="odd gradeX">
                                 <td th:text="${entry.entryName}"></td>
-                                <td th:text="${entry.fppNumber}"></td>
-                                <td th:text="${entry.mppNumber}"></td>
+                                <td th:text="${entry.fppNumber}" width="5%"></td>
+                                <td th:text="${entry.mppNumber}" width="5%"></td>
                                 <td  th:text="${entry.startDate}" class="center"></td>
                                 <td th:text="${entry.endDate}" class="center"></td>
+                                <td width="30%">
+                                    <a th:each="block, itr : ${entry.blocks}" th:inline="text"
+                                       class="badge badge-primary" th:href="@{'/detailsBlock/' + ${block.id}}">
+                                        [[${block.blockName}]] <br th:if="${!itr.last}" />
+                                    </a>
+                                </td>
                                 <td>
                                     <a th:href="@{'/updateEntry/' + ${entry.id}}" class="btn btn-success btn-sm">Edit</a>&nbsp;
                                     <a th:href="@{'/deleteEntry/' + ${entry.id}}" class="btn btn-danger btn-sm">Delete</a>

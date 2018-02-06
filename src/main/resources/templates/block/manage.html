@@ -23,17 +23,21 @@
                             <th>Block Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Number of FFP Course</th>
-                            <th>Number of MPP Course</th>
+                            <th>Sequence Number</th>
+                            <th width="5%">Number of FFP</th>
+                            <th width="5%">Number of MPP</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <th:block th:each="block  : ${allBlock}" >
                             <tr class="odd gradeX">
-                                <td th:text="${block.blockName}"></td>
+                                <td>
+                                    <a th:text="${block.blockName}" th:href="@{'/detailsBlock/' + ${block.id}}"></a>
+                                </td>
                                 <td th:text="${block.startDate}" class="center"></td>
                                 <td th:text="${block.endDate}" class="center"></td>
+                                <td th:text="${block.sequenceNumber}" class="center"></td>
                                 <td th:text="${block.numberOfFppCourse}"></td>
                                 <td th:text="${block.numberOfMppCourse}"></td>
                                 <td>
