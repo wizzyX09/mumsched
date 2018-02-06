@@ -1,10 +1,11 @@
 package edu.mum.mumsched.controller;
 
-import edu.mum.mumsched.model.Block;
-import edu.mum.mumsched.model.Course;
-import edu.mum.mumsched.model.Faculty;
+import edu.mum.mumsched.model.*;
 import edu.mum.mumsched.service.ICourseService;
+import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IFacultyService;
+import edu.mum.mumsched.service.ISectionService;
+import edu.mum.mumsched.util.MonthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +29,12 @@ public class FacultyController {
 
     @Autowired
     IFacultyService iFacultyService;
+
+    @Autowired
+    IEntryService iEntryService;
+
+    @Autowired
+    ISectionService iSectionService;
 
     @GetMapping("/course")
     public String displayPreferredCourses(Model model) {
@@ -58,6 +66,50 @@ public class FacultyController {
         return "redirect:/faculty/course";
     }
 
+    @GetMapping("/section")
+    public String displaySections(Model model) {
+        // to display list of sections in drop down list
+        List<Section> sectionList = iSectionService.findAll();
+        model.addAttribute("sectionList", sectionList);
+
+        // created as a container to hold multiple sections from selection
+        model.addAttribute("faculty", new Faculty());
+
+        // to display a list of sections preferred by faculty in a table
+        Faculty faculty = getLoggedInFaculty();
+        Set<Section> sections = faculty.getSections();
+        model.addAttribute("selectedSections", sections);
+
+        return "faculty/section/manage";
+    }
+
+    @PostMapping("/section/add")
+    public String addSections(@ModelAttribute("faculty") Faculty facultyContainer) {
+        Faculty connectedFaculty = getLoggedInFaculty();
+        Set<Section> selectedSectionList = facultyContainer.getSections();
+        if (facultyContainer != null) {
+            connectedFaculty.getSections().addAll(selectedSectionList);
+            iFacultyService.save(connectedFaculty);
+        }
+        return "redirect:/faculty/section";
+    }
+
+    @GetMapping("/faculty/section/delete/{id}")
+    public String deleteSections(@PathVariable("id") Integer id) {
+        Faculty faculty = getLoggedInFaculty();
+        Set<Section> sections = faculty.getSections();
+
+        Iterator<Section> it = sections.iterator();
+        while (it.hasNext()) {
+            Section section = it.next();
+            if (section.getId() == id) {
+                it.remove();
+            }
+        }
+        iFacultyService.save(faculty);
+        return "redirect:/faculty/section";
+    }
+
     @GetMapping("/course/delete/{id}")
     public String deletePreferredCourse(@PathVariable("id") Integer id) {
         Faculty faculty = getLoggedInFaculty();
@@ -83,16 +135,61 @@ public class FacultyController {
 
     @GetMapping("/profile-update")
     public String updateFacultyProfile(Model model) {
+        Faculty faculty = getLoggedInFaculty();
+        model.addAttribute("faculty", faculty);
         return "faculty/profile/update";
+    }
+
+    @PostMapping("/profile/update")
+    public String saveFacultyProfile(@ModelAttribute("faculty") Faculty faculty){
+        iFacultyService.save(faculty);
+        return "redirect:/faculty/profile";
     }
 
     @GetMapping("/block")
     public String displayUnwantedBlocks(Model model) {
+        List<BlockMonths> monthBlockList = MonthUtil.getMonths();
+        model.addAttribute("monthBlockList", monthBlockList);
+        model.addAttribute("faculty",new Faculty());
+
+        // to dispaly list of courses preferred by faculty in a table
+        Faculty faculty = getLoggedInFaculty();
+        Set<BlockMonths> unwantedBlocks = faculty.getUnwantedBlocks();
+        model.addAttribute("unwantedBlocks", unwantedBlocks);
         return "faculty/block/manage";
+    }
+
+    @PostMapping("/block/add")
+    public String addUnwantedBlocks(@ModelAttribute("faculty") Faculty faculty) {
+        Faculty connectedFaculty = getLoggedInFaculty();
+        List<BlockMonths> monthBlockList = MonthUtil.getMonths();
+        if (faculty != null) {
+            connectedFaculty.getUnwantedBlocks().addAll(faculty.getUnwantedBlocks());
+            iFacultyService.save(connectedFaculty);
+        }
+
+        return "redirect:/faculty/block";
+    }
+
+    @GetMapping("/block/delete/{unwantedBlock}")
+    public String deleteUnwantedBlocks(@PathVariable("unwantedBlock") BlockMonths unwantedBlock) {
+        Faculty faculty = getLoggedInFaculty();
+        Set<BlockMonths> blockMonths = faculty.getUnwantedBlocks();
+
+        Iterator<BlockMonths> it = blockMonths.iterator();
+        while (it.hasNext()) {
+            BlockMonths block = it.next();
+            if (block.equals(unwantedBlock)) {
+                it.remove();
+            }
+        }
+        iFacultyService.save(faculty);
+        return "redirect:/faculty/block";
     }
 
     @GetMapping("/schedule")
     public String viewSchedule(Model model) {
+        model.addAttribute("entries", iEntryService.findAll());
         return "faculty/schedule/view";
     }
 

@@ -1,9 +1,7 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 public class Faculty {
@@ -23,6 +21,19 @@ public class Faculty {
     @Enumerated(EnumType.STRING)
     private Specialization specialization;
     //faculty sections
+
+    /* @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "faculty_unwanted_blocks",
+            joinColumns = {@JoinColumn(name = "faculty_id")},
+            inverseJoinColumns = {@JoinColumn(name = "block_id")})
+    */
+
+    @ElementCollection(targetClass = BlockMonths.class)
+    @JoinTable(name = "faculty_unwanted_blocks", joinColumns = @JoinColumn(name = "faculty_id"))
+    @Column(name = "month", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<BlockMonths> unwantedBlocks;
+
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;
     //faculty course preferences
@@ -31,6 +42,12 @@ public class Faculty {
             joinColumns = {@JoinColumn(name = "faculty_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private Set<Course> preferredCourses;
+
+    @ElementCollection(targetClass = BlockMonths.class)
+    @JoinTable(name = "faculty_unwanted_blocks", joinColumns = @JoinColumn(name = "faculty_id"))
+    @Column(name = "month", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<BlockMonths> unwantedBlocks;
     public int getId() {
         return id;
     }
@@ -79,6 +96,14 @@ public class Faculty {
         this.email = email;
     }
 
+    public Set<BlockMonths> getUnwantedBlocks() {
+        return unwantedBlocks;
+    }
+
+    public void setUnwantedBlocks(Set<BlockMonths> unwantedBlocks) {
+        this.unwantedBlocks = unwantedBlocks;
+    }
+
     public Set<Section> getSections() {
         return sections;
     }
@@ -112,11 +137,17 @@ public class Faculty {
         this.specialization = specialization;
     }
 
-    //it is not correct yet
+    public Set<BlockMonths> getUnwantedBlocks() {
+        return unwantedBlocks;
+    }
+
+    public void setUnwantedBlocks(Set<BlockMonths> unwantedBlocks) {
+        this.unwantedBlocks = unwantedBlocks;
+    }
+    
     public boolean isAvailable(Block block) {
-        return true;
-        /*List<Block> blocks = this.getUnwantedBlocks().stream().filter(bl -> bl.getBlockName().contains(block.getBlockName())).collect(Collectors.toList());
-        return blocks.size() == 0 ? true : false;*/
+        List<BlockMonths> blocks = this.getUnwantedBlocks().stream().filter(b1->b1.toString().contains(block.getBlockName())).collect(Collectors.toList());
+        return blocks.size() == 0 ? true : false;
     }
 
     public void addSection(Section section){

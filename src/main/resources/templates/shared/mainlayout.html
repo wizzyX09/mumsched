@@ -13,22 +13,22 @@
     <title th:text="#{home.title}">Welcome home</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link th:href="@{/vendor/metisMenu/metisMenu.min.css}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet">
 
     <!-- Custom CSS hide message -->
-    <link href="/dist/css/annimate.css" rel="stylesheet">
+    <link th:href="@{/dist/css/annimate.css}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="/vendor/morrisjs/morris.css" rel="stylesheet">
+    <link th:href="@{/vendor/morrisjs/morris.css}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,7 +54,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../home" th:text="#{app.name}">MUMSched</a>
+            <a class="navbar-brand" th:href="@{/home}" th:text="#{app.name}">MUMSched</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -84,7 +84,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="../logout" th:inline="text"> [[#{general.logout}]]<i class="fa fa-sign-out"></i></a>
+                        <a th:href="@{/logout}" th:inline="text"> [[#{general.logout}]]<i class="fa fa-sign-out"></i></a>
                     </li>
                 </ul>
 
@@ -102,7 +102,7 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="../home" th:inline="text"><i class="fa fa-dashboard fa-fw"></i>[[#{general.dashboard}]]</a>
+                        <a th:href="@{/home}" th:inline="text"><i class="fa fa-dashboard fa-fw"></i>[[#{general.dashboard}]]</a>
                     </li>
                     <!-- menu -->
 
@@ -112,7 +112,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a th:text="#{menu.manage}" href="../allUsers">Manage</a>
+                                <a th:text="#{menu.manage}" th:href="@{/allUsers}">Manage</a>
                             </li>
 
                         </ul>
@@ -124,7 +124,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a th:text="#{menu.manage}" href="../allCourse">Manage</a>
+                                <a th:text="#{menu.manage}" th:href="@{/allCourse}">Manage</a>
                             </li>
 
                         </ul>
@@ -136,7 +136,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a th:text="#{menu.manage}" href="../allEntry">Manage</a>
+                                <a th:text="#{menu.manage}" th:href="@{/allEntry}">Manage</a>
                             </li>
 
                         </ul>
@@ -148,7 +148,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a th:text="#{menu.manage}" href="../allBlock">Manage</a>
+                                <a th:text="#{menu.manage}" th:href="@{/allBlock}">Manage</a>
                             </li>
 
                         </ul>
@@ -160,7 +160,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a th:text="#{menu.manage}" href="../section/manage">Manage</a>
+                                <a th:text="#{menu.manage}" th:href="@{/section/manage}">Manage</a>
 
                             </li>
 
@@ -185,7 +185,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a href="../faculty/profile">Manage</a>
+                                <a th:href="@{/faculty/profile}">Manage</a>
                             </li>
 
                         </ul>
@@ -197,7 +197,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a href="../faculty/course">Manage</a>
+                                <a th:href="@{/faculty/course}">Manage</a>
                             </li>
 
                         </ul>
@@ -209,10 +209,22 @@
                     <ul class="nav nav-second-level">
 
                         <li>
-                            <a href="../faculty/block">Manage</a>
+                            <a href="@{/faculty/block}">Manage</a>
                         </li>
 
                     </ul>
+                    </li>
+
+                    <li sec:authorize="hasAuthority('FACULTY')">
+                        <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Section<span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="../faculty/section">Manage</a>
+                            </li>
+
+                        </ul>
                     </li>
 
                     <li sec:authorize="hasAuthority('FACULTY')">
@@ -221,7 +233,7 @@
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a href="../faculty/schedule">View</a>
+                                <a href="@{/faculty/schedule}">View</a>
                             </li>
 
                         </ul>
@@ -246,21 +258,21 @@
 <!-- /#wrapper -->
 
 <!-- jQuery -->
-<script src="../vendor/jquery/jquery.min.js"></script>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script src="../vendor/metisMenu/metisMenu.min.js"></script>
+<script th:src="@{/vendor/metisMenu/metisMenu.min.js}"></script>
 
 <!-- Morris Charts JavaScript -->
-<script src="../vendor/raphael/raphael.min.js"></script>
-<script src="../vendor/morrisjs/morris.min.js"></script>
-<script src="../data/morris-data.js"></script>
+<script th:src="@{/vendor/raphael/raphael.min.js}"></script>
+<script th:src="@{/vendor/morrisjs/morris.min.js}"></script>
+<script th:src="@{/data/morris-data.js}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="../dist/js/sb-admin-2.js"></script>
+<script th:src="@{/dist/js/sb-admin-2.js}"></script>
 <th:block  layout:fragment="footer"></th:block>
 
 </body>

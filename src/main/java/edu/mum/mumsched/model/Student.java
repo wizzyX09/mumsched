@@ -17,8 +17,9 @@ public class Student {
     private Gender gender;
     @Column(unique = true)
     private String email;
+    private String username;
+    @ManyToMany(mappedBy = "students", cascade=CascadeType.ALL)
     //enrolled sections
-    @ManyToMany(mappedBy = "students")
     private Set<Section> sections;
     //student entry
     @OneToOne
@@ -32,6 +33,22 @@ public class Student {
     //student account
     @OneToOne
     private User user;
+
+    public void addSection(Section sec){
+        sections.add(sec);
+        sec.addStudent(this);
+    }
+
+    public void removeSection(Section sec){
+        sections.remove(sec);
+        sec.removeStudent(this);
+        /*for (Section s : sections) {
+            if (s.getId() == secId) {
+
+                return;
+            }
+        }*/
+    }
 
     public Integer getId() {
         return id;
@@ -89,6 +106,10 @@ public class Student {
         this.entry = entry;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Set<Section> getSections() {
         return sections;
     }
@@ -96,7 +117,6 @@ public class Student {
     public void setSections(Set<Section> sections) {
         this.sections = sections;
     }
-
     public StudyTrack getStudyTrack() {
         return studyTrack;
     }

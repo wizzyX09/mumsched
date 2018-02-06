@@ -33,6 +33,16 @@ public class Section {
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Course course;
 
+    public void addStudent(Student stu){
+        students.add(stu);
+
+    }
+
+    public void removeStudent(Student stu){
+        students.remove(stu);
+
+    }
+
     public Section() {
     }
 

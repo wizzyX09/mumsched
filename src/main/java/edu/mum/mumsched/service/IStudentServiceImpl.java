@@ -31,4 +31,8 @@ public class IStudentServiceImpl implements IStudentService {
         return studentRepository.findAll();
     }
 
+    @Override
+    public Student findByEmail(String email) {
+        return studentRepository.findByEmail(email);
+    }
 }

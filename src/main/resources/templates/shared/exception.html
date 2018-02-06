@@ -1,0 +1,21 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <h2 class="page-header" th:text="#{general.welcome}">MUMSched Home</h2>
+    </div>
+    <div class="alert alert-danger fade in" th:inline="text">
+        <strong>Danger!</strong> [[${exception}]]
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>

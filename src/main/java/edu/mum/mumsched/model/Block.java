@@ -1,5 +1,7 @@
 package edu.mum.mumsched.model;
 
+import edu.mum.mumsched.exception.CourseNotFoundException;
+import edu.mum.mumsched.util.COURSE;
 import org.hibernate.mapping.Map;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -20,9 +22,9 @@ public class Block {
     private String blockName;//must be unique
     private Date startDate;
     private Date endDate;
-    private int numberOfFppCourse;
-    private int numberOfMppCourse;
-    private int sequenceNumber;
+    private Integer numberOfFppCourse;
+    private Integer numberOfMppCourse;
+    private Integer sequenceNumber;
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL)
     private Set<Section> sections;
 
@@ -62,11 +64,11 @@ public class Block {
         return numberOfFppCourse;
     }
 
-    public void setNumberOfFppCourse(int numberOfFppCourse) {
+    public void setNumberOfFppCourse(Integer numberOfFppCourse) {
         this.numberOfFppCourse = numberOfFppCourse;
     }
 
-    public int getNumberOfMppCourse() {
+    public Integer getNumberOfMppCourse() {
         return numberOfMppCourse;
     }
 
@@ -74,11 +76,11 @@ public class Block {
         this.numberOfMppCourse = numberOfMppCourse;
     }
 
-    public int getSequenceNumber() {
+    public Integer getSequenceNumber() {
         return sequenceNumber;
     }
 
-    public void setSequenceNumber(int sequenceNumber) {
+    public void setSequenceNumber(Integer sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
     }
 
@@ -104,20 +106,16 @@ public class Block {
         }
     }
 
-    public void createSections(List<Course> courseList, Entry entry) throws Exception {
+    public void createSections(List<Course> courseList, Entry entry)throws RuntimeException{
         //Now compute how many more seats are needed
         int seatsNeeded = entry.getFppNumber() + entry.getMppNumber();
-        if (seatsNeeded <= 0)
-            throw new Exception("The MPP and FPP projection is incorrect, edit the entry details to proceed");
-        //than check how many FPP sections are needed
+           //than check how many FPP sections are needed
         if (numberOfFppCourse > 0) {
-            Course fpp = courseList.stream().filter(c -> c.getName().contains("FPP")).findFirst().get();
-            if (fpp == null) {
-                throw new Exception("This block require FPP section, block name: " + this.getBlockName() + ", But No FPP course in database");
-            }
+            Course fpp = findFPPorMPP(COURSE.FPP,courseList);
             int temp = this.numberOfFppCourse;
             while (temp > 0) {
                 Section sect = addSection(fpp, temp);
+                sect.setSchedule(entry.getSchedule());
                 seatsNeeded -= sect.getCapacity();
                 temp--;
             }
@@ -126,17 +124,14 @@ public class Block {
 
         //than check how many MPP sections are needed
         if (numberOfMppCourse > 0) {
-            Course mpp = courseList.stream().filter(c -> c.getName().contains("MPP")).findFirst().get();
-            if (mpp == null) {
-                throw new Exception("This block require MPP section, block name: " + this.getBlockName() + ", But No MPP course in database");
-            }
+            Course mpp = findFPPorMPP(COURSE.MPP,courseList);
             int temp = this.numberOfMppCourse;
             while (temp > 0) {
                 Section sect = addSection(mpp, temp);
+                sect.setSchedule(entry.getSchedule());
                 temp--;
                 seatsNeeded -= sect.getCapacity();
             }
-
         }//end of mpp section creation
 
         if (seatsNeeded <= 0)
@@ -144,7 +139,7 @@ public class Block {
         //if the block as previous section , compute available seats
         int seatsAlreadyAvailable = 0;
         for (Section temp : this.getSections()) {
-            if (!temp.getName().contains("MPP") && !temp.getName().contains("FPP"))
+            if (!temp.getName().contains(COURSE.MPP.toString()) && !temp.getName().contains(COURSE.FPP.toString()))
                 seatsAlreadyAvailable += temp.getAvailableSeats();
         }
         //create extra section
@@ -152,9 +147,8 @@ public class Block {
         int temp = 0;
         while (seatsNeeded > 0) {
             Course course = Course.getBestCourse(courseList);
-            if (course == null)
-                throw new Exception("Not enough course available");
             Section sect = addSection(course, temp);
+            sect.setSchedule(entry.getSchedule());
             temp++;
             seatsNeeded -= sect.getCapacity();
         }//done created extra course
@@ -172,5 +166,21 @@ public class Block {
         if (fact != null)
             fact.addSection(sect);
         return sect;
+    }
+ private Course  findFPPorMPP(COURSE desc,List<Course> courses)throws RuntimeException{
+ /*    System.out.println("=====================Courses List======================================");
+     for(Course c:courses){
+         System.out.println(c.getName());
+     }*/
+      Course course = courses.stream().filter(c -> c.getName().equalsIgnoreCase(desc.toString())).findFirst().get();
+      if(course==null){
+          throw new CourseNotFoundException("This block require FPP or MPP section, block name: " + this.getBlockName() + ", But No such course is found in database");
+      }
+      //courses.remove(course);
+      return course;
+  }
+
+    public void setNumberOfMppCourse(Integer numberOfMppCourse) {
+        this.numberOfMppCourse = numberOfMppCourse;
     }
 }
