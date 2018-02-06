@@ -24,14 +24,22 @@ public class BlockController {
 
     @GetMapping("/allBlock")
     public String findAll(Model model){
-        model.addAttribute("allBlock",iBlockService.findAll());
+        model.addAttribute("allBlock",iBlockService.findAllByOrdered());
         return "block/manage";
+    }
+
+    @GetMapping("/detailsBlock/{id}")
+    public String detailsBlockForm(@PathVariable("id") Integer id, Model model){
+        Block block = iBlockService.findById(id);
+        model.addAttribute("block", block);
+        model.addAttribute("entryList", iEntryService.findEntriesByBlocksContains(block));
+        return "block/details";
     }
 
     @GetMapping("/newBlock")
     public String addBlockForm(Model model) {
         model.addAttribute("block", new Block());
-        model.addAttribute("entryList", iEntryService.findAll());
+//        model.addAttribute("entryList", iEntryService.findAll());
         return "block/form";
     }
 
@@ -51,7 +59,7 @@ public class BlockController {
     @GetMapping("/updateBlock/{id}")
     public String updateBlockForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("block", iBlockService.findById(id));
-        model.addAttribute("entryList", iEntryService.findAll());
+//        model.addAttribute("entryList", iEntryService.findAll());
         return "block/form";
     }
 }

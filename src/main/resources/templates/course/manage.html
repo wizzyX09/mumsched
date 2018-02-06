@@ -37,7 +37,7 @@
                                     <a th:each="prerequisite : ${course.prerequisites}" th:inline="text"
                                        class="badge badge-primary" th:href="@{'/detailsCourse/' + ${prerequisite.id}}">
                                             [[${prerequisite.code}]] [[${prerequisite.name}]]
-                                        </a>
+                                    </a>
                                 </td>
                                 <td>
                                     <a th:href="@{'/updateCourse/' + ${course.id}}" class="btn btn-success btn-sm">Edit</a>&nbsp;

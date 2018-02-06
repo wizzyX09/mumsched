@@ -1,0 +1,95 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Block Detail
+                </div>
+                <div class="panel-body" th:object="${block}">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Block Name: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${block.blockName}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Start Date: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${block.startDate}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">End Date: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${block.endDate}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Number of FPP Course: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${block.numberOfFppCourse}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Number of MPP Course: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${block.numberOfMppCourse}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Sequence Number: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${block.sequenceNumber}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Sections: </label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">
+                                    <span th:each="section : ${block.sections}" th:text="${section.name}"
+                                          class="badge badge-primary">
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Related Entries: </label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">
+                                    <span th:each="entry : ${entryList}" th:text="${entry.entryName}"
+                                       class="badge badge-primary">
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <a th:href="@{'/updateBlock/' + ${block.id}}" class="btn btn-success">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>

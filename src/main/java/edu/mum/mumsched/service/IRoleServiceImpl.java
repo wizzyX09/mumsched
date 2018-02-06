@@ -22,4 +22,9 @@ public class IRoleServiceImpl implements IRoleService {
     public Role findById(Integer id) {
         return roleRepository.findOne(id);
     }
+
+    @Override
+    public List<Role> findAllExcept(String role1, String role2) {
+        return roleRepository.findAllByRoleIsNotAndRoleIsNot(role1, role2);
+    }
 }

@@ -9,4 +9,5 @@ public interface IBlockService {
     public void delete(Integer blockId);
     public void save(Block block);
     public List<Block> findAll();
+    public List<Block> findAllByOrdered();
 }

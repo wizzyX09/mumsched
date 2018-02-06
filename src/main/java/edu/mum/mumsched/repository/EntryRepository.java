@@ -1,6 +1,7 @@
 package edu.mum.mumsched.repository;
 
 
+import edu.mum.mumsched.model.Block;
 import edu.mum.mumsched.model.Entry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +14,6 @@ public interface EntryRepository extends JpaRepository<Entry, Integer> {
 	public Entry findEntryByEntryName(String name);
     @Query("from Entry en where en.schedule.id is null")
 	List<Entry> findEntryWithoutSchedule();
+    List<Entry> findEntriesByBlocksContains(Block block);
+    List<Entry> findAllByOrderByStartDateAsc();
 }

@@ -32,4 +32,9 @@ public class IBlockServiceImpl implements IBlockService{
     public List<Block> findAll() {
         return blockRepository.findAll();
     }
+
+    @Override
+    public List<Block> findAllByOrdered() {
+        return blockRepository.findAllByOrderByStartDateAsc();
+    }
 }

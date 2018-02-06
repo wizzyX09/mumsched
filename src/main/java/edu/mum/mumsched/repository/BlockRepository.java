@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface BlockRepository extends JpaRepository<Block, Integer> {
     public Block findBlockByBlockName(String name);
+    public List<Block> findAllByOrderByStartDateAsc();
 }
