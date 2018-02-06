@@ -1,5 +1,6 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.model.Section;
 import edu.mum.mumsched.model.Student;
 import edu.mum.mumsched.service.ISectionService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/student")
@@ -26,10 +29,25 @@ public class StudentController {
             return "redirect:/login";
 
         String studentEmail = principal.getName();
-        Student student = iStudentService.findByEmail(studentEmail);
-        model.addAttribute("sectionRegistration", student);
-        model.addAttribute("sectionList", iSectionService.findAll());
-        model.addAttribute("studentSections", student.getSections());
+        Student student = iStudentService.findByEmail(studentEmail);//student object
+
+        Entry entry = student.getEntry();
+        entry.getBlocks();
+        System.out.println("entry **********************************  ************  " +  entry.getEntryName() + " - " + entry.getMppNumber());
+
+        List<Section> sectionList = iSectionService.findAll();
+        Set<Section> studentSections = student.getSections();
+
+        for (Section sSec:studentSections) {
+            if(sectionList.contains(sSec))
+                sectionList.remove(sSec);
+        }
+
+        //  sectionList.stream().filter(s->s.equals())
+
+        model.addAttribute("sectionRegistration", student);//student object
+        model.addAttribute("sectionList", sectionList);//available sections
+        model.addAttribute("studentSections", studentSections);//sections already registered for
 
        // studentSections
 
