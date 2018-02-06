@@ -37,7 +37,7 @@ public class SectionController {
     //Display manage section page, show listing of sections in db
     @RequestMapping(value="/manage",method = RequestMethod.GET)
     public String manageSection(Model model){
-        model.addAttribute("allSection",sectionRegistrationFacade.sectionList());//iSectionService.findAll());
+        model.addAttribute("allSection",sectionRegistrationFacade.findAll());//iSectionService.findAll());
         return "section/manage";
     }
     //Display section Form

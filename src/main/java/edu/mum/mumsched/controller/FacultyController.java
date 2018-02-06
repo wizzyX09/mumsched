@@ -69,7 +69,7 @@ public class FacultyController {
     @GetMapping("/section")
     public String displaySections(Model model) {
         // to display list of sections in drop down list
-        List<Section> sectionList = sectionRegistrationFacade.sectionList();
+        List<Section> sectionList = sectionRegistrationFacade.findAll();
         model.addAttribute("sectionList", sectionList);
 
         // created as a container to hold multiple sections from selection
