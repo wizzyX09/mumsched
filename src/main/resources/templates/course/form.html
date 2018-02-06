@@ -34,6 +34,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="initialCapacity" class="col-sm-3">Initial Capacity: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="initialCapacity" type="text" th:field="*{initialCapacity}" />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="specialization" class="col-sm-3">Area of Specialization: </label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="specialization" type="text" th:field="*{specialization}" />
@@ -48,6 +56,20 @@
                                             th:field="*{prerequisites}" multiple="multiple">
                                         <option th:each="prerequisite : ${prerequisiteList}"
                                                 th:value="${prerequisite.id}" th:text="${prerequisite.name}"></option>
+                                    </select>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="faculties" class="col-sm-3">Faculties: </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="faculties"
+                                            th:field="*{faculties}" multiple="multiple">
+                                        <option th:each="object : ${facultyList}"
+                                                th:value="${object.id}" th:inline="text">
+                                            [[${object.firstName}]] [[${object.lastName}]]
+                                        </option>
                                     </select>
                                     <p class="help-block"></p>
                                 </div>

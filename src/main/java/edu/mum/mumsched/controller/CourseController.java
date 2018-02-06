@@ -2,6 +2,7 @@ package edu.mum.mumsched.controller;
 
 import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.service.ICourseService;
+import edu.mum.mumsched.service.IFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class CourseController {
     @Autowired
     private ICourseService iCourseService;
 
+    @Autowired
+    private IFacultyService iFacultyService;
+
     @GetMapping("/allCourse")
     public String findAll(Model model){
         model.addAttribute("allCourse", iCourseService.findAll());
@@ -29,6 +33,7 @@ public class CourseController {
     public String addCourseForm(Model model){
         model.addAttribute("course", new Course());
         model.addAttribute("prerequisiteList", iCourseService.findAll());
+        model.addAttribute("facultyList", iFacultyService.findAll());
         return "course/form";
     }
 
@@ -36,6 +41,7 @@ public class CourseController {
     public String updateCourseForm(@PathVariable("id") Integer id, Model model){
         model.addAttribute("course", iCourseService.findById(id));
         model.addAttribute("prerequisiteList", iCourseService.findAllExcept(id));
+        model.addAttribute("facultyList", iFacultyService.findAll());
         return "course/form";
     }
 
