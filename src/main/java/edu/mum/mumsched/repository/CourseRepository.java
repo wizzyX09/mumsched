@@ -10,6 +10,5 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     Course findByCode(String code);
-
     List<Course> findByIdNot(Integer courseId);
 }

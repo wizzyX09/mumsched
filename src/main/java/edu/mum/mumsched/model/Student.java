@@ -1,6 +1,7 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,12 +15,24 @@ public class Student {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Column(unique = true)
     private String email;
     private String username;
     @ManyToMany(mappedBy = "students", cascade=CascadeType.ALL)
+    //enrolled sections
     private Set<Section> sections;
+    //student entry
     @OneToOne
     private Entry entry;
+    //student study track
+    @Enumerated(EnumType.STRING)
+    private StudyTrack studyTrack;
+    //student work track
+    @Enumerated(EnumType.STRING)
+    private WorkTrack workTrack;
+    //student account
+    @OneToOne
+    private User user;
 
     public void addSection(Section sec){
         sections.add(sec);
@@ -85,8 +98,12 @@ public class Student {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
 
     public void setUsername(String username) {
@@ -100,12 +117,27 @@ public class Student {
     public void setSections(Set<Section> sections) {
         this.sections = sections;
     }
-
-    public Entry getEntry() {
-        return entry;
+    public StudyTrack getStudyTrack() {
+        return studyTrack;
     }
 
-    public void setEntry(Entry entry) {
-        this.entry = entry;
+    public void setStudyTrack(StudyTrack studyTrack) {
+        this.studyTrack = studyTrack;
+    }
+
+    public WorkTrack getWorkTrack() {
+        return workTrack;
+    }
+
+    public void setWorkTrack(WorkTrack workTrack) {
+        this.workTrack = workTrack;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

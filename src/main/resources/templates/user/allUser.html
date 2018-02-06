@@ -7,7 +7,12 @@
 
 <th:block layout:fragment="content">
     <div>
-        <a class="btn btn-primary" th:href="@{/newUser}">Add New</a>
+        <a class="btn btn-primary" th:href="@{/newUser}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
+        </a>
+        <a class="btn btn-primary" th:href="@{/user/accountType}">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Generate Account
+        </a>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -31,7 +36,10 @@
                         <tbody>
                         <th:block th:each="user  : ${allUser}" >
                             <tr class="odd gradeX">
-                                <td th:text="${user.name}"></td>
+                                <td th:inline="text">
+                                    <a th:text="${user.firstName}" th:href="@{'/detailsUser/' + ${user.id}}">
+                                    </a>
+                                </td>
                                 <td th:text="${user.lastName}" class="center"></td>
                                 <td th:text="${user.email}" class="center"></td>
                                 <td th:text="${user.rolesString}"></td>

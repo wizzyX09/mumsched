@@ -10,26 +10,23 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span >Generate New Schedule</span>
+                    Select Account Type
                 </div>
                 <div class="panel-body">
-                    <form th:action="@{/schedule/create}" th:object="${schedule}" method="post">
+                    <form th:action="@{/user/generateAccount}" method="post">
                         <fieldset>
                             <div class="form-group">
-                                <label for="entry" class="col-sm-3">Entry: </label>
+                                <label for="accountType" class="col-sm-3">Account Type: </label>
                                 <div class="col-sm-9">
-                                    <select required class="form-control" id="entry"
-                                            th:field="*{entry}">
-                                        <option th:each="entry : ${entries}"
-                                                th:value="${entry.id}" th:text="${entry.entryName}"></option>
+                                    <select class="form-control" id="accountType" name="accountType" >
+                                        <option th:each="role: ${roles}" th:value="${role}" th:text="${role}"></option>
                                     </select>
                                     <p class="help-block"></p>
                                 </div>
                             </div>
 
                             <div class="text-center">
-                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Generate" />
-                                <a class="btn btn-default" th:href="@{/schedule/manage}">Cancel</a>
+                                <input id="btnAdd" class="btn btn-primary" type="submit" value="Continue" />
                             </div>
                         </fieldset>
                     </form>
@@ -44,3 +41,4 @@
 
 </body>
 </html>
+

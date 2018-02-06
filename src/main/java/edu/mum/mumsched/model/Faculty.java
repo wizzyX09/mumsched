@@ -1,7 +1,10 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @Entity
 public class Faculty {
     @Id
@@ -11,21 +14,23 @@ public class Faculty {
     private String firstName;
     private String lastName;
     private Gender gender;
+    @Column(unique = true)
     private String email;
-    private String username;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "faculty_preferred_blocks",
-            joinColumns = {@JoinColumn(name = "faculty_id")},
-            inverseJoinColumns = {@JoinColumn(name = "block_id")})
-    private Set<Block> preferredBlocks;
+    //faculty account
+    @OneToOne
+    private User user;
+    //faculty specialization track
+    @Enumerated(EnumType.STRING)
+    private Specialization specialization;
+    //faculty sections
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;
+    //faculty course preferences
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "faculty_courses",
             joinColumns = {@JoinColumn(name = "faculty_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private Set<Course> preferredCourses;
-
     public int getId() {
         return id;
     }
@@ -74,22 +79,6 @@ public class Faculty {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Set<Block> getPreferredBlocks() {
-        return preferredBlocks;
-    }
-
-    public void setPreferredBlocks(Set<Block> preferredBlocks) {
-        this.preferredBlocks = preferredBlocks;
-    }
-
     public Set<Section> getSections() {
         return sections;
     }
@@ -105,4 +94,36 @@ public class Faculty {
     public void setPreferredCourses(Set<Course> preferredCourses) {
         this.preferredCourses = preferredCourses;
     }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Specialization getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
+    //it is not correct yet
+    public boolean isAvailable(Block block) {
+        return true;
+        /*List<Block> blocks = this.getUnwantedBlocks().stream().filter(bl -> bl.getBlockName().contains(block.getBlockName())).collect(Collectors.toList());
+        return blocks.size() == 0 ? true : false;*/
+    }
+
+    public void addSection(Section section){
+        if(section!=null){
+            section.setFaculty(this);
+            this.sections.add(section);
+        }
+    }
+
 }

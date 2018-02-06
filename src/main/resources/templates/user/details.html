@@ -1,0 +1,69 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    User Detail
+                </div>
+                <div class="panel-body" th:object="${user}">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Email: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${user.email}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">First Name: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${user.firstName}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Last Name: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${user.lastName}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Active: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${user.active}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Roles: </label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">
+                                    <span th:each="role : ${user.roles}" th:text="${role.role}" class="badge badge-primary">
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <a th:href="@{'/updateUser/' + ${user.id}}" class="btn btn-success">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>
