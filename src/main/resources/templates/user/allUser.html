@@ -48,8 +48,8 @@
                                     <span th:unless="${user.active}">No</span>
                                 </td>
                                 <td>
-                                    <a th:href="@{'/updateUser/' + ${user.id}}" class="btn btn-success">Edit</a>&nbsp;
-                                    <a th:href="@{'/deleteUser/' + ${user.id}}" class="btn btn-danger">Delete</a>
+                                    <a th:href="@{'/updateUser/' + ${user.id}}" class="btn btn-success btn-sm">Edit</a>&nbsp;
+                                    <a th:href="@{'/deleteUser/' + ${user.id}}" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                         </th:block>

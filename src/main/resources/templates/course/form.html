@@ -44,7 +44,12 @@
                             <div class="form-group">
                                 <label for="specialization" class="col-sm-3">Area of Specialization: </label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="specialization" type="text" th:field="*{specialization}" />
+                                    <select class="form-control" id="specialization" th:field="*{specialization}">
+                                        <option value="">-- Not Set --</option>
+                                        <option th:each="spec : ${specializationList}"
+                                                th:value="${spec}" th:text="${spec}">
+                                        </option>
+                                    </select>
                                     <p class="help-block"></p>
                                 </div>
                             </div>

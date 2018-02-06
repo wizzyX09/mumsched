@@ -1,8 +1,10 @@
 package edu.mum.mumsched.controller;
 
 import edu.mum.mumsched.model.Course;
+import edu.mum.mumsched.model.Specialization;
 import edu.mum.mumsched.service.ICourseService;
 import edu.mum.mumsched.service.IFacultyService;
+import edu.mum.mumsched.util.SpecializationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class CourseController {
@@ -34,6 +37,7 @@ public class CourseController {
         model.addAttribute("course", new Course());
         model.addAttribute("prerequisiteList", iCourseService.findAll());
         model.addAttribute("facultyList", iFacultyService.findAll());
+        model.addAttribute("specializationList", SpecializationUtil.getSpecializations());
         return "course/form";
     }
 
@@ -42,6 +46,7 @@ public class CourseController {
         model.addAttribute("course", iCourseService.findById(id));
         model.addAttribute("prerequisiteList", iCourseService.findAllExcept(id));
         model.addAttribute("facultyList", iFacultyService.findAll());
+        model.addAttribute("specializationList", SpecializationUtil.getSpecializations());
         return "course/form";
     }
 
