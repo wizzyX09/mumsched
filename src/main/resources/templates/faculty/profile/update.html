@@ -13,8 +13,17 @@
                     <span>Faculty Profile</span>
                 </div>
                 <div class="panel-body">
-                    <form th:action="@{../faculty/saveFacultyProfile}" th:object="${faculty}" method="post">
+                    <form th:action="@{../faculty/profile/update}" th:object="${faculty}" method="post">
                         <fieldset>
+                            <input class="form-control"  type="hidden" th:field="*{id}"/>
+                            <input class="form-control"  type="hidden" th:field="*{facultyID}"/>
+                            <input class="form-control"  type="hidden" th:field="*{gender}" />
+                            <input class="form-control"  type="hidden" th:field="*{specialization}"/>
+                            <input class="form-control"  type="hidden" th:field="*{unwantedBlocks}" />
+                            <input class="form-control"  type="hidden" th:field="*{preferredCourses}" />
+                            <input class="form-control"  type="hidden" th:field="*{sections}" />
+                            <input class="form-control"  type="hidden" th:field="*{user}"/>
+
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-3">First Name: </label>
                                 <div class="col-sm-9">

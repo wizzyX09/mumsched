@@ -87,12 +87,12 @@ public class FacultyController {
     @GetMapping("/profile-update")
     public String updateFacultyProfile(Model model) {
         Faculty faculty = getLoggedInFaculty();
-        model.addAttribute("faculty", iFacultyService.findById(faculty.getId()));
+        model.addAttribute("faculty", faculty);
         return "faculty/profile/update";
     }
 
-    @PostMapping("/saveFacultyProfile")
-    public String saveFacultyProfile(@ModelAttribute @Valid Faculty faculty){
+    @PostMapping("/profile/update")
+    public String saveFacultyProfile(@ModelAttribute("faculty") Faculty faculty){
         iFacultyService.save(faculty);
         return "redirect:/faculty/profile";
     }
