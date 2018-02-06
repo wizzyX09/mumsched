@@ -1,9 +1,7 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 public class Faculty {
@@ -23,6 +21,19 @@ public class Faculty {
     @Enumerated(EnumType.STRING)
     private Specialization specialization;
     //faculty sections
+
+    /* @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "faculty_unwanted_blocks",
+            joinColumns = {@JoinColumn(name = "faculty_id")},
+            inverseJoinColumns = {@JoinColumn(name = "block_id")})
+    */
+
+    @ElementCollection(targetClass = BlockMonths.class)
+    @JoinTable(name = "faculty_unwanted_blocks", joinColumns = @JoinColumn(name = "faculty_id"))
+    @Column(name = "month", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<BlockMonths> unwantedBlocks;
+
     @OneToMany(mappedBy = "faculty")
     private Set<Section> sections;
     //faculty course preferences
@@ -83,6 +94,14 @@ public class Faculty {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<BlockMonths> getUnwantedBlocks() {
+        return unwantedBlocks;
+    }
+
+    public void setUnwantedBlocks(Set<BlockMonths> unwantedBlocks) {
+        this.unwantedBlocks = unwantedBlocks;
     }
 
     public Set<Section> getSections() {

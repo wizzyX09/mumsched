@@ -38,6 +38,8 @@
                                     <a th:if="${object.user == null}"
                                        th:href="@{'/user/generateStudent/' + ${object.id}}"
                                        class="btn btn-success btn-sm">Generate</a>
+                                    <a th:unless="${object.user == null}"
+                                       th:href="@{'/detailsUser/' + ${object.user.id}}">View user</a>
                                 </td>
                             </tr>
                         </th:block>

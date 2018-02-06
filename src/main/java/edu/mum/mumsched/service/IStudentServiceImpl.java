@@ -32,5 +32,7 @@ public class IStudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public List<Student> findAllByUserIsNull() { return studentRepository.findAllByUserNull(); }
+    public Student findByEmail(String email) {
+        return studentRepository.findByEmail(email);
+    }
 }
