@@ -1,10 +1,10 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.SectionRegistrationSubsystem.ISectionRegistrationSubsystem;
 import edu.mum.mumsched.model.*;
 import edu.mum.mumsched.service.ICourseService;
 import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IFacultyService;
-import edu.mum.mumsched.service.ISectionService;
 import edu.mum.mumsched.util.MonthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,7 +34,7 @@ public class FacultyController {
     IEntryService iEntryService;
 
     @Autowired
-    ISectionService iSectionService;
+    ISectionRegistrationSubsystem sectionRegistrationFacade;
 
     @GetMapping("/course")
     public String displayPreferredCourses(Model model) {
@@ -69,7 +69,7 @@ public class FacultyController {
     @GetMapping("/section")
     public String displaySections(Model model) {
         // to display list of sections in drop down list
-        List<Section> sectionList = iSectionService.findAll();
+        List<Section> sectionList = sectionRegistrationFacade.sectionList();
         model.addAttribute("sectionList", sectionList);
 
         // created as a container to hold multiple sections from selection
