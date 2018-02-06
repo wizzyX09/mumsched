@@ -43,8 +43,9 @@
                                 <td th:text="${section.capacity}"></td>
                                 <td th:text="${section.students.size()}"></td>
                                 <td>
+                                    <span th:if="${section.students.size() < 1}">
                                     <a th:href="@{'/section/update/' + ${section.id}}" class="btn btn-success">Edit</a>
-                                    <a th:href="@{'/section/delete/' + ${section.id}}" class="btn btn-danger">Delete</a>
+                                    <a th:href="@{'/section/delete/' + ${section.id}}" class="btn btn-danger">Delete</a></span>
                                 </td>
                             </tr>
                         </th:block>

@@ -1,9 +1,9 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.SectionRegistrationSubsystem.ISectionRegistrationSubsystem;
 import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.model.Section;
 import edu.mum.mumsched.model.Student;
-import edu.mum.mumsched.service.ISectionService;
 import edu.mum.mumsched.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class StudentController {
     @Autowired
     IStudentService iStudentService;
     @Autowired
-    ISectionService iSectionService;
+    ISectionRegistrationSubsystem sectionRegistrationFacade;
 
     @GetMapping("/register")
     public String registerSectionForm(Model model, Principal principal){
@@ -35,7 +35,7 @@ public class StudentController {
         entry.getBlocks();
         System.out.println("entry **********************************  ************  " +  entry.getEntryName() + " - " + entry.getMppNumber());
 
-        List<Section> sectionList = iSectionService.findAll();
+        List<Section> sectionList = sectionRegistrationFacade.sectionList();
         Set<Section> studentSections = student.getSections();
 
         for (Section sSec:studentSections) {
@@ -63,7 +63,18 @@ public class StudentController {
         String studentEmail = principal.getName();
 
         Student studentToPersist = iStudentService.findByEmail(studentEmail);
-        studentToPersist.addSection(student.getSections().iterator().next());
+
+
+        Section sec = student.getSections().iterator().next();
+        System.out.println(sec.getStudents().size() +"  size**************************capacity     "+ sec.getCapacity());
+        if(sec.getStudents().size() >= sec.getCapacity()){
+            redirectAttributes.addFlashAttribute("studentSections", studentToPersist.getSections());
+            redirectAttributes.addFlashAttribute("errorMes", "Section reach capacity choose another!");
+            return "redirect:/student/register";
+        }
+
+
+        studentToPersist.addSection(sec);
         iStudentService.save(studentToPersist);
 
         for (Section s: studentToPersist.getSections()) {
@@ -84,7 +95,7 @@ public class StudentController {
         String studentEmail = principal.getName();
         Student student = iStudentService.findByEmail(studentEmail);
 
-        student.removeSection(iSectionService.findById(id));
+        student.removeSection(sectionRegistrationFacade.findById(id));
         iStudentService.save(student);
 
         return "redirect:/student/register";
