@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("concreteService")
-public abstract class ConcreteServiceImpl<TEntity extends User, TModel> implements UserService<TEntity, TModel> {
+public abstract class ConcreteServiceImpl<TEntity extends User, TModel>  {
 
     @Autowired
     private BaseUserRepository<TEntity> baseUserRepository;
@@ -38,14 +38,14 @@ public abstract class ConcreteServiceImpl<TEntity extends User, TModel> implemen
         return modelMapper.map(entity, modelClass);
     }
 
-    public List<TModel> findAll() {
+    /*public List<TModel> findAll() {
         List<TModel> result = new ArrayList<>();
         List<TEntity> entities = baseUserRepository.findAll();
         for (TEntity entity : entities) {
             result.add(modelMapper.map(entity, modelClass));
         }
         return result;
-    }
+    }*/
 
     public void update(TModel model) {
         TEntity entity = modelMapper.map(model, entityClass);

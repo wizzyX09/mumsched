@@ -6,6 +6,7 @@ import java.util.List;
 
 // Todo delete this class
 public interface IStudentService {
+    public Student findByEmail(String email);
     public Student findById(Integer studentId);
     public void delete(Integer studentId);
     public void save(Student student);

@@ -121,9 +121,9 @@ public class UserForm {
     public User getEntity() {
         User user = new User();
         if (this.isFaculty()) {
-            user = new Faculty();
+           // user = new Faculty();
         } else if (this.isStudent()) {
-            user = new Student();
+            //user = new Student();
         } else if (this.isAdmin()) {
             user = new Admin();
         }

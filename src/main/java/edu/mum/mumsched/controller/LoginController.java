@@ -2,7 +2,6 @@ package edu.mum.mumsched.controller;
 
 
 import edu.mum.mumsched.model.User;
-import edu.mum.mumsched.model.UserForm;
 import edu.mum.mumsched.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,9 +16,9 @@ import javax.validation.Valid;
 
 @Controller
 public class LoginController {
-
+	
 	@Autowired
-	private UserService<User, UserForm> userService;
+	private UserService userService;
 
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -32,16 +31,16 @@ public class LoginController {
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
-		UserForm userForm = new UserForm();
-		modelAndView.addObject("user", userForm);
+		User user = new User();
+		modelAndView.addObject("user", user);
 		modelAndView.setViewName("users/registration");
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid UserForm userForm, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		UserForm userExists = userService.findByEmail(userForm.getEmail());
+		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			bindingResult
 					.rejectValue("email", "error.user", "There is already a user registered with the email provided");
@@ -49,33 +48,33 @@ public class LoginController {
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("users/registration");
 		} else {
-			userService.save(userForm);
+			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("users/registration");
 		}
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserForm userForm = userService.findByEmail(auth.getName());
-		modelAndView.addObject("message", "Welcome " + userForm.getName() + " " + userForm.getLastName() + " (" + userForm.getEmail() + ")");
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("message", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/admin", method = RequestMethod.GET)
+    @RequestMapping(value="/admin", method = RequestMethod.GET)
 	public String admin(){
 		return "admin/admin";
 	}
 
-	@RequestMapping(value="/faculty", method = RequestMethod.GET)
-	public String faculty(){
-		return "faculty/faculty";
-	}
+    @RequestMapping(value="/faculty", method = RequestMethod.GET)
+    public String faculty(){
+        return "faculty/faculty";
+    }
 	@RequestMapping(value="/403", method = RequestMethod.GET)
 	public String accessDenied(){
 		return "403";
