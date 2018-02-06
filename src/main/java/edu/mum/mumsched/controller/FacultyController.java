@@ -1,11 +1,10 @@
 package edu.mum.mumsched.controller;
 
-import edu.mum.mumsched.model.Block;
-import edu.mum.mumsched.model.BlockMonths;
-import edu.mum.mumsched.model.Course;
-import edu.mum.mumsched.model.Faculty;
+import edu.mum.mumsched.model.*;
 import edu.mum.mumsched.service.ICourseService;
+import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IFacultyService;
+import edu.mum.mumsched.service.ISectionService;
 import edu.mum.mumsched.util.MonthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,6 +29,12 @@ public class FacultyController {
 
     @Autowired
     IFacultyService iFacultyService;
+
+    @Autowired
+    IEntryService iEntryService;
+
+    @Autowired
+    ISectionService iSectionService;
 
     @GetMapping("/course")
     public String displayPreferredCourses(Model model) {
@@ -59,6 +64,50 @@ public class FacultyController {
             iFacultyService.save(faculty);
         }
         return "redirect:/faculty/course";
+    }
+
+    @GetMapping("/section")
+    public String displaySections(Model model) {
+        // to display list of sections in drop down list
+        List<Section> sectionList = iSectionService.findAll();
+        model.addAttribute("sectionList", sectionList);
+
+        // created as a container to hold multiple sections from selection
+        model.addAttribute("faculty", new Faculty());
+
+        // to display a list of sections preferred by faculty in a table
+        Faculty faculty = getLoggedInFaculty();
+        Set<Section> sections = faculty.getSections();
+        model.addAttribute("selectedSections", sections);
+
+        return "faculty/section/manage";
+    }
+
+    @PostMapping("/section/add")
+    public String addSections(@ModelAttribute("faculty") Faculty facultyContainer) {
+        Faculty connectedFaculty = getLoggedInFaculty();
+        Set<Section> selectedSectionList = facultyContainer.getSections();
+        if (facultyContainer != null) {
+            connectedFaculty.getSections().addAll(selectedSectionList);
+            iFacultyService.save(connectedFaculty);
+        }
+        return "redirect:/faculty/section";
+    }
+
+    @GetMapping("/faculty/section/delete/{id}")
+    public String deleteSections(@PathVariable("id") Integer id) {
+        Faculty faculty = getLoggedInFaculty();
+        Set<Section> sections = faculty.getSections();
+
+        Iterator<Section> it = sections.iterator();
+        while (it.hasNext()) {
+            Section section = it.next();
+            if (section.getId() == id) {
+                it.remove();
+            }
+        }
+        iFacultyService.save(faculty);
+        return "redirect:/faculty/section";
     }
 
     @GetMapping("/course/delete/{id}")
@@ -116,9 +165,9 @@ public class FacultyController {
         List<BlockMonths> monthBlockList = MonthUtil.getMonths();
         if (faculty != null) {
             connectedFaculty.getUnwantedBlocks().addAll(faculty.getUnwantedBlocks());
-            iFacultyService.save(faculty);
+            iFacultyService.save(connectedFaculty);
         }
-        iFacultyService.save(faculty);
+
         return "redirect:/faculty/block";
     }
 
@@ -140,6 +189,7 @@ public class FacultyController {
 
     @GetMapping("/schedule")
     public String viewSchedule(Model model) {
+        model.addAttribute("entries", iEntryService.findAll());
         return "faculty/schedule/view";
     }
 
