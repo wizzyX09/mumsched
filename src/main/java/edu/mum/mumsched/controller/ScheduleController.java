@@ -26,9 +26,10 @@ public class ScheduleController {
     }
 
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String createForm(Model model,@ModelAttribute("exception") final String exception) {
         model.addAttribute("schedule", new Schedule());
         model.addAttribute("entries", iEntryService.findEntryWithoutSchedule());
+        model.addAttribute("exception",exception);
         return "schedule/add";
     }
 
@@ -44,7 +45,7 @@ public class ScheduleController {
     public String create(@ModelAttribute Schedule schedule,Model model) {
         try {
             iScheduleService.saveOrUpdate(schedule.generate(iCourseService.findAll()));
-        } catch (Exception e) {
+        }catch(RuntimeException e){
             e.printStackTrace();
         }
         model.addAttribute("message","Schedule generated");

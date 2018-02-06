@@ -1,10 +1,14 @@
 package edu.mum.mumsched.model;
 
+import edu.mum.mumsched.exception.BlockException;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="entries")
@@ -151,4 +155,33 @@ public class Entry {
     public void setBlocks(Set<Block> blocks) {
         this.blocks = blocks;
     }
+
+    public void checkBlockRequirements(){
+        List<Block> blockList =this.getBlocks().stream().sorted((b1,b2)->b1.getSequenceNumber().compareTo(b2.getSequenceNumber())).collect(Collectors.toList());
+        if(blockList.size()>10)
+            throw new BlockException("No more than 10 blocks are allowed!");
+        if(blockList.size()==9)
+            return;
+        //make sure I got enough block for us-resident
+        if((this.getPercentUsResident()>0)&&(this.getFppNumber()>0)&&(blockList.size()!=10))
+            throw new BlockException("Because we got FPP student, and US Resident, we need 10 blocks");
+        if((this.getPercentUsResident()>0)&&(this.getFppNumber()==0)&&(blockList.size()!=9))
+            throw new BlockException("Because we are not expecting FPP students,We need 9 blocks for US-Resident");
+        if((this.getPercentUsResident()>0)&&(this.getFppNumber()==0)&&(blockList.size()!=9))
+            throw new BlockException("Because we are not expecting FPP students,We need 9 blocks for US-Resident");
+      //make sure I got enough for OPT
+        if((this.getPercentOpt()>0)&&(this.getFppNumber()>0)&&(blockList.size()<7))
+            throw new BlockException("Because we got FPP student, and we are expecting OPT, we need at least 7 blocks");
+        if((this.getPercentOpt()>0)&&(this.getFppNumber()==0)&&(blockList.size()<6))
+            throw new BlockException("Because we are not expecting FPP students,We need 6 blocks at least for the OPT");
+
+        //make sure I got enough for CPT
+        if((this.getPercentCpt()>0)&&(this.getFppNumber()>0)&&(blockList.size()<6))
+            throw new BlockException("Because we got FPP student, and we are expecting CPT, we need at least 6 blocks");
+        if((this.getPercentCpt()>0)&&(this.getFppNumber()==0)&&(blockList.size()<5))
+            throw new BlockException("Because we are not expecting FPP students,We need 5 blocks at least for the CPT");
+
+
+    }
+
 }
