@@ -31,6 +31,4 @@ public class IStudentServiceImpl implements IStudentService {
         return studentRepository.findAll();
     }
 
-    @Override
-    public List<Student> findAllByUserIsNull() { return studentRepository.findAllByUserNull(); }
 }

@@ -19,9 +19,7 @@
                                 <label for="accountType" class="col-sm-3">Account Type: </label>
                                 <div class="col-sm-9">
                                     <select class="form-control" id="accountType" name="accountType" >
-                                        <option value="STUDENT">Student</option>
-                                        <option value="FACULTY">Faculty</option>
-                                        <option value="ADMIN">Admin</option>
+                                        <option th:each="role: ${roles}" th:value="${role}" th:text="${role}"></option>
                                     </select>
                                     <p class="help-block"></p>
                                 </div>

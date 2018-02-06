@@ -6,19 +6,14 @@
 </th:block>
 
 <th:block layout:fragment="content">
-    <div>
-        <a class="btn btn-primary" th:href="@{/newUser}">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
-        </a>
-        <a class="btn btn-primary" th:href="@{/user/accountType}">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Generate Account
-        </a>
-    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Available Users
+                    Faculty List
+                    <a class="btn btn-primary btn-sm" th:href="@{/newEntry}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Generate All
+                    </a>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -28,28 +23,23 @@
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Roles</th>
-                            <th>Active</th>
+                            <th>Code</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="user  : ${allUser}" >
+                        <th:block th:each="object  : ${list}" >
                             <tr class="odd gradeX">
-                                <td th:inline="text">
-                                    <a th:text="${user.firstName}" th:href="@{'/detailsUser/' + ${user.id}}">
-                                    </a>
-                                </td>
-                                <td th:text="${user.lastName}" class="center"></td>
-                                <td th:text="${user.email}" class="center"></td>
-                                <td th:text="${user.rolesString}"></td>
+                                <td th:text="${object.firstName}"></td>
+                                <td th:text="${object.lastName}"></td>
+                                <td th:text="${object.email}"></td>
+                                <td th:text="${object.facultyID}"></td>
                                 <td>
-                                    <span th:if="${user.active}">Yes</span>
-                                    <span th:unless="${user.active}">No</span>
-                                </td>
-                                <td>
-                                    <a th:href="@{'/updateUser/' + ${user.id}}" class="btn btn-success">Edit</a>&nbsp;
-                                    <a th:href="@{'/deleteUser/' + ${user.id}}" class="btn btn-danger">Delete</a>
+                                    <a th:if="${object.user == null}"
+                                       th:href="@{'/user/generateFaculty/' + ${object.id}}"
+                                       class="btn btn-success btn-sm">Generate</a>
+                                    <a th:unless="${object.user == null}"
+                                       th:href="@{'/detailsUser/' + ${object.user.id}}">View user</a>
                                 </td>
                             </tr>
                         </th:block>
