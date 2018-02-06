@@ -115,7 +115,7 @@ public class Block {
             int temp = this.numberOfFppCourse;
             while (temp > 0) {
                 Section sect = addSection(fpp, temp);
-                sect.setSchedule(entry.getSchedule());
+                entry.getSchedule().addSection(sect);
                 seatsNeeded -= sect.getCapacity();
                 temp--;
             }
@@ -129,8 +129,9 @@ public class Block {
             while (temp > 0) {
                 Section sect = addSection(mpp, temp);
                 sect.setSchedule(entry.getSchedule());
-                temp--;
+                entry.getSchedule().addSection(sect);
                 seatsNeeded -= sect.getCapacity();
+                temp--;
             }
         }//end of mpp section creation
 
@@ -149,8 +150,9 @@ public class Block {
             Course course = Course.getBestCourse(courseList);
             Section sect = addSection(course, temp);
             sect.setSchedule(entry.getSchedule());
-            temp++;
+            entry.getSchedule().addSection(sect);
             seatsNeeded -= sect.getCapacity();
+            temp++;
         }//done created extra course
     }
 

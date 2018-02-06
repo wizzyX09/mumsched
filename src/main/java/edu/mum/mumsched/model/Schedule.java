@@ -88,6 +88,22 @@ public class Schedule implements Serializable{
         return this;
     }
 
+    public void addSection(Section section) {
+        if (section != null) {
+            sections.add(section);
+            section.setSchedule(this);
+        }
+    }
+
+    public void removeSection(Section section) {
+        if (section != null) {
+            sections.remove(section);
+            section.setSchedule(null);
+        }
+    }
 
 
+    public void onApproved() {
+        entry.checkBlockRequirements();
+    }
 }
