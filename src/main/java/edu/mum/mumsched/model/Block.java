@@ -161,7 +161,6 @@ public class Block {
     }
 
     public Section createSection(Course course, int counter) {
-        System.out.println("Block:"+this.getBlockName()+"Course:"+course.getName());
         Section sect = new Section();
         sect.setName(course.getName() + "-" + this.getBlockName() + "-" + counter);
         sect.setCapacity(course.getInitialCapacity());
@@ -170,8 +169,12 @@ public class Block {
         course.addSection(sect);
         this.addSection(sect);
         Faculty fact = course.getBestFaculty(this);
-        if (fact != null)
-            fact.addSection(sect);
+        if (fact != null) {
+            if(fact.isAvailable(this)) {
+                fact.addSection(sect);
+                fact.addLockBlock(this);
+            }
+        }
         return sect;
     }
 

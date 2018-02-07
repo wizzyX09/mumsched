@@ -10,7 +10,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Course List
+                    Schedule List
                     <a class="btn btn-primary btn-sm" th:href="@{/schedule/create}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
                     </a>
@@ -18,6 +18,9 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <div th:if="${!exception.isEmpty()}" class="alert alert-danger fade in" >
+                            <strong>Danger!</strong> <span th:text="${exception}"></span>
+                        </div>
                         <thead>
                         <tr>
                             <th>#</th>

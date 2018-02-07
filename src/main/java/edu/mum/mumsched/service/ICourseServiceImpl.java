@@ -36,4 +36,9 @@ public class ICourseServiceImpl implements ICourseService {
     public List<Course> findAllExcept(Integer courseId) {
         return courseRepository.findByIdNot(courseId);
     }
+
+    @Override
+    public List<Course> findAllAvailableByDepartment(String departmentName) {
+        return courseRepository.findAll();
+    }
 }
