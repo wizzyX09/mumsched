@@ -1,5 +1,6 @@
 package edu.mum.mumsched.SectionRegistrationSubsystem;
 
+import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.model.Section;
 
 import java.util.List;
@@ -11,5 +12,6 @@ interface ISectionService {
     public List<Section> findAll();
 
     public List<Section> findByBlockId(Integer blockId, Integer id);
+    public List<Section> findByCourse(Course course);
 
 }

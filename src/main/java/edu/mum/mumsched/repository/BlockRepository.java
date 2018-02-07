@@ -10,4 +10,5 @@ import java.util.List;
 public interface BlockRepository extends JpaRepository<Block, Integer> {
     public Block findBlockByBlockName(String name);
     public List<Block> findAllByOrderByStartDateAsc();
+    public Block findBlockByBlockNameAndSequenceNumber(String blockName, Integer seqNum);
 }

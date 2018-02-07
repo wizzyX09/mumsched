@@ -11,4 +11,6 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     Course findByCode(String code);
     List<Course> findByIdNot(Integer courseId);
+    List<Course> findByNameNotAndIdNot(String name, Integer courseId);
+    List<Course> findAllByPrerequisitesContains(Course course);
 }

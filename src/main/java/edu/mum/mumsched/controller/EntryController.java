@@ -1,5 +1,6 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.exception.EntryException;
 import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.service.IBlockService;
 import edu.mum.mumsched.service.IEntryService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -37,11 +39,18 @@ public class EntryController {
     }
 
     @GetMapping("/deleteEntry/{id}")
-    public String deleteEntryForm(@PathVariable("id") Integer id){
+    public String deleteEntryForm(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         Entry entry = iEntryService.findById(id);
-        entry.setBlocks(null);
-        iEntryService.save(entry);
-        iEntryService.delete(id);
+        if(entry.getSchedule() == null) {
+            entry.setBlocks(null);
+            iEntryService.save(entry);
+            iEntryService.delete(id);
+            redirectAttributes.addFlashAttribute("messageSuccess","The entry has deleted!");
+        } else {
+            redirectAttributes.addFlashAttribute("messageError",
+                    "The entry was not deleted! Schedule is created. " +
+                            "You cannot delete entry once schedule is created.");
+        }
         return "redirect:/allEntry";
     }
 
@@ -53,10 +62,18 @@ public class EntryController {
     }
 
     @PostMapping("/saveEntry")
-    public String saveEntry(@ModelAttribute @Valid Entry entry, BindingResult bindingResult){
+    public String saveEntry(@ModelAttribute @Valid Entry entry,
+                            BindingResult bindingResult, RedirectAttributes redirectAttributes){
         bindingResult.hasErrors();
         iEntryService.save(entry);
+        redirectAttributes.addFlashAttribute("messageSuccess","The entry saved!");
         return "redirect:/allEntry";
+    }
+
+    @GetMapping("/detailsEntry/{id}")
+    public String detailsEntryForm(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("entry", iEntryService.findById(id));
+        return "entry/details";
     }
 
 }

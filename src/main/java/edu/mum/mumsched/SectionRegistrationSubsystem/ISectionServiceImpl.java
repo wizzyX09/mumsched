@@ -1,5 +1,6 @@
 package edu.mum.mumsched.SectionRegistrationSubsystem;
 
+import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.model.Section;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,10 @@ class ISectionServiceImpl implements ISectionService {
     @Override
     public List<Section> findByBlockId(Integer blockId, Integer id) {
         return sectionRepository.findByBlockId(blockId, id);
+    }
+
+    @Override
+    public List<Section> findByCourse(Course course) {
+        return sectionRepository.findByCourse(course);
     }
 }

@@ -32,10 +32,12 @@
                         <tbody>
                         <th:block th:each="entry  : ${allEntry}" >
                             <tr class="odd gradeX">
-                                <td th:text="${entry.entryName}"></td>
+                                <td th:inline="text">
+                                    <a th:href="@{'/detailsEntry/' + ${entry.id}}">[[${entry.entryName}]]</a>
+                                </td>
                                 <td th:text="${entry.fppNumber}" width="5%"></td>
                                 <td th:text="${entry.mppNumber}" width="5%"></td>
-                                <td  th:text="${entry.startDate}" class="center"></td>
+                                <td th:text="${entry.startDate}" class="center"></td>
                                 <td th:text="${entry.endDate}" class="center"></td>
                                 <td width="30%">
                                     <a th:each="block, itr : ${entry.blocks}" th:inline="text"

@@ -1,5 +1,6 @@
 package edu.mum.mumsched.SectionRegistrationSubsystem;
 
+import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.model.Section;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,10 @@ class SectionRegistrationFacade implements ISectionRegistrationSubsystem {
     @Override
     public void delete(Integer id) {
         iSectionService.delete(id);
+    }
+
+    @Override
+    public List<Section> findByCourse(Course course) {
+        return iSectionService.findByCourse(course);
     }
 }

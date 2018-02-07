@@ -30,7 +30,7 @@ public class Entry {
     @OneToMany(mappedBy = "entry")
     private Set<Student> students;
     @OrderBy("sequenceNumber ASC")
-    @ManyToMany//(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "entry_blocks",
             joinColumns = {@JoinColumn(name = "entry_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "block_id", referencedColumnName = "id")})
