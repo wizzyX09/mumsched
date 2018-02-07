@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,14 +17,22 @@ public class Block {
     private int id;
 
     @NotEmpty(message = "Specify block name")
+    @Column(unique = true)
     private String blockName;//must be unique
     private Date startDate;
     private Date endDate;
     private Integer numberOfFppCourse;
     private Integer numberOfMppCourse;
+    @GeneratedValue
     private Integer sequenceNumber;
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL)
     private Set<Section> sections;
+
+    public Block() {
+        this.numberOfFppCourse=0;
+        this.numberOfMppCourse=0;
+        sections=new HashSet<>();
+    }
 
     public int getId() {
         return id;
