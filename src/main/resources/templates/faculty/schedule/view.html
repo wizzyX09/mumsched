@@ -28,19 +28,11 @@
                             <tr class="odd gradeX">
                                 <td th:text="${entry.entryName}"></td>
                                 <td>
-                                    <a th:href="@{'/schedule/details/' + ${entry.schedule.id}}" class="btn btn-primary btn-sm">View Schedule</a>
+                                    <a th:if="${entry.schedule != null}" th:href="@{'/schedule/details/' + ${entry.schedule.id}}" class="btn btn-primary btn-sm">View Schedule</a>
                                 </td>
                             </tr>
                         </th:block>
 
-                        <!-- dummy entry for test -->
-                        <tr class="odd gradeX">
-                            <td>dummy entry</td>
-                            <td>
-                                <a href="../schedule/100" class="btn btn-primary btn-sm">View Schedule</a>
-                            </td>
-                        </tr>
-                        <!-- dummy entry for test -->
                         </tbody>
                     </table>
                     <!-- /.table-responsive -->
