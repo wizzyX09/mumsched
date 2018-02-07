@@ -36,4 +36,9 @@ public class ICourseServiceImpl implements ICourseService {
     public List<Course> findAllExcept(Integer courseId) {
         return courseRepository.findByIdNot(courseId);
     }
+
+    @Override
+    public List<Course> findDuplicates(String name, Integer courseId) {
+        return courseRepository.findByNameAndIdIsNot(name, courseId);
+    }
 }

@@ -260,7 +260,14 @@
     </nav>
 
     <div id="page-wrapper">
-
+        <div class="row" th:if="${messageError != null}" th:inline="text">
+            <div class="alert alert-danger">[[${messageError}]]<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        </div>
+        <div class="row" th:if="${messageSuccess != null}" th:inline="text">
+            <div class="alert alert-success">[[${messageSuccess}]]<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        </div>
         <th:block  layout:fragment="content"></th:block>
 
     </div>

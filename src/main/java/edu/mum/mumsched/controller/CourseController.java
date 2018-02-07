@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -51,8 +52,17 @@ public class CourseController {
     }
 
     @PostMapping("/saveCourse")
-    public String saveCourse(@ModelAttribute @Valid Course course, BindingResult bindingResult){
+    public String saveCourse(@ModelAttribute @Valid Course course, Model model,
+                             BindingResult bindingResult, RedirectAttributes redirectAttributes){
         bindingResult.hasErrors();
+        if(iCourseService.findDuplicates(course.getName(), course.getId()).size() > 0) {
+            redirectAttributes.addFlashAttribute("messageError", "The course name cannot be duplicated.");
+            if (course.getId() > 0) {
+                return "redirect:/updateCourse/" + course.getId();
+            } else {
+                return addCourseForm(model);
+            }
+        }
         iCourseService.save(course);
         return "redirect:/allCourse";
     }
