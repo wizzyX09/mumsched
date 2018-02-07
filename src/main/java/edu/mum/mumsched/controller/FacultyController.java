@@ -74,8 +74,9 @@ public class FacultyController {
         List<Section> sectionList = sectionRegistrationFacade.findAll();
         model.addAttribute("sectionList", sectionList);
 
-        // created as a container to hold multiple sections from selection
-        model.addAttribute("faculty", new Faculty());
+        // when a section is selected from the drop down list, the id of the selected section
+        // will be set to this section object
+        model.addAttribute("section", new Section());
 
         // to display a list of sections preferred by faculty in a table
         Faculty faculty = getLoggedInFaculty();
@@ -86,17 +87,17 @@ public class FacultyController {
     }
 
     @PostMapping("/section/add")
-    public String addSections(@ModelAttribute("faculty") Faculty facultyContainer) {
+    public String addSections(@Valid @ModelAttribute("section") Section selectedSection, BindingResult bindingResult) {
         Faculty connectedFaculty = getLoggedInFaculty();
-        Set<Section> selectedSectionList = facultyContainer.getSections();
-        if (facultyContainer != null) {
-            connectedFaculty.getSections().addAll(selectedSectionList);
+        Section sec = iSectionService.findById(selectedSection.getId());
+        if (connectedFaculty != null && sec != null) {
+            connectedFaculty.getSections().add(sec);
             iFacultyService.save(connectedFaculty);
         }
         return "redirect:/faculty/section";
     }
 
-    @GetMapping("/faculty/section/delete/{id}")
+    @GetMapping("/section/delete/{id}")
     public String deleteSections(@PathVariable("id") Integer id) {
         Faculty faculty = getLoggedInFaculty();
         Set<Section> sections = faculty.getSections();
