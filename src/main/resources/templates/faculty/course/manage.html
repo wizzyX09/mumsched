@@ -20,7 +20,7 @@
                             <div class="form-group">
                                 <label for="course" class="col-sm-3">Course: </label>
                                 <div class="col-sm-9">
-                                    <select multiple class="form-control" id="course" th:field="*{id}">
+                                    <select class="form-control" id="course" th:field="*{id}">
                                         <option th:each="course : ${courseList}"
                                                 th:value="${course.id}" th:text="${course.name}">
                                         </option>
