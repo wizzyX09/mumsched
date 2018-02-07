@@ -148,7 +148,7 @@ public class Course implements Serializable {
         int sectionAlreadyTaught = bestFaculty.getSections().size();
         for (Faculty fac : this.getFaculties()) {
             int temp = fac.getSections().size();
-            if (sectionAlreadyTaught > temp && fac.isAvailable(block) && !isLastToTeachThisCourse()) {
+            if (sectionAlreadyTaught > temp && fac.isAvailable(block)) {
                 bestFaculty = fac;
             }
         }

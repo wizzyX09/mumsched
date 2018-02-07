@@ -50,7 +50,7 @@ public class BlockController {
         Block foundBlock = iBlockService.findBlockByBlockNameAndSequenceNumber(block.getBlockName(), block.getSequenceNumber());
         if (foundBlock != null) { // if found duplicate
             //return error
-            redirectAttributes.addFlashAttribute("messageError", "The block id and seq. number combination cannot be duplicated.");
+            redirectAttributes.addFlashAttribute("messageError", "The block name and seq. number combination cannot be duplicated.");
         } else {
             iBlockService.save(block);
         }

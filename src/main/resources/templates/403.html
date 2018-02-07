@@ -1,0 +1,44 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Schedule List
+                    <a class="btn btn-primary btn-sm" th:href="@{/schedule/create}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
+                    </a>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                        <div  class="alert alert-danger fade in" >
+                            <strong>Danger!</strong> <span>Access denied!!</span>
+                        </div>
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>
+
+
+

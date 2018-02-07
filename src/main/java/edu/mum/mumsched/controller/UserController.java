@@ -109,7 +109,7 @@ public class UserController {
 
     @GetMapping("/user/generateStudentList")
     public String generateStudentList(Model model) {
-        model.addAttribute("list", iStudentService.findAll());
+            model.addAttribute("list", iStudentService.findAll());
         return "user/generateStudentList";
     }
 
@@ -130,4 +130,9 @@ public class UserController {
         userService.generateUserByFaculty(iFacultyService.findById(id));
         return "redirect:/allUsers";
     }
+
+  /*  @GetMapping("/403")
+    public String _403(){
+        return"403";
+    }*/
 }

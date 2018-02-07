@@ -46,4 +46,9 @@ public class ICourseServiceImpl implements ICourseService {
     public List<Course> findAllByPrerequisitesContains(Course course) {
         return courseRepository.findAllByPrerequisitesContains(course);
     }
+
+    @Override
+    public List<Course> findAllAvailableByDepartment(String departmentName) {
+        return courseRepository.findAll();
+    }
 }

@@ -43,7 +43,7 @@ public class IScheduleServiceImpl implements IScheduleService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(Schedule schedule) throws RuntimeException{
-        if (isScheduleLock(schedule)) {
+        if (isScheduleLockOnUpdate(schedule)) {
             throw new ScheduleLockException();
         }
         Entry entry = schedule.getEntry();
@@ -52,7 +52,7 @@ public class IScheduleServiceImpl implements IScheduleService {
         scheduleRepository.delete(schedule.getId());
     }
 
-    public boolean isScheduleLock(Schedule schedule) {
+    public boolean isScheduleLockOnUpdate(Schedule schedule) {
         for (Section section : schedule.getSections()) {
             if (section.getEnrolled() > 0)
                 return true;
