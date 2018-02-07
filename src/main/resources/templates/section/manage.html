@@ -39,7 +39,8 @@
                                 <td th:text="${section.block.blockName }" class="center"></td>
 
                                 <td th:text="${section.course.name}"></td>
-                                <td th:text="${section.faculty.firstName +' '+ section.faculty.lastName}"></td>
+                                <td th:if="${section.faculty != null}" th:text="${section.faculty.firstName +' '+ section.faculty.lastName}"></td>
+                                <td th:unless="${section.faculty != null}"></td>
                                 <td th:text="${section.capacity}"></td>
                                 <td th:text="${section.students.size()}"></td>
                                 <td>

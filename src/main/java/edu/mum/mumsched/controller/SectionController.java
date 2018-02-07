@@ -62,7 +62,7 @@ public class SectionController {
         Integer secId = section.getId()==null?0:section.getId();
         List<Section> blockSections = sectionRegistrationFacade.findByBlockId(block.getId(), secId);
         for (Section bSec: blockSections) {
-            if(bSec.getFaculty().getId() == faculty.getId()) {
+            if(bSec.getFaculty() != null && bSec.getFaculty().getId() == faculty.getId()) {
                 if (section.getId() == null) {
 
                     System.out.println("*****section ID******************" + section.getId());

@@ -2,6 +2,7 @@ package edu.mum.mumsched.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -33,6 +34,14 @@ public class Section {
     @OneToOne(cascade = {CascadeType.PERSIST})
     private Course course;
 
+    public Section() {
+
+        this.capacity = 0;
+        this.enrolled = 0;
+        this.availableSeats = 0;
+
+    }
+
     public void addStudent(Student stu){
         students.add(stu);
 
@@ -41,9 +50,6 @@ public class Section {
     public void removeStudent(Student stu){
         students.remove(stu);
 
-    }
-
-    public Section() {
     }
 
     public Integer getId() {
