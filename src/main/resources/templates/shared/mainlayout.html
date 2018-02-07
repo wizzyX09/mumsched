@@ -118,7 +118,7 @@
                         </ul>
                     </li>
 
-                    <li sec:authorize="hasAuthority('ADMIN')">
+                    <li sec:authorize="hasAnyAuthority('ADMIN')">
                         <a href="#" th:inline="text"><i class="fa fa-graduation-cap" aria-hidden="true"></i>[[#{menu.courses}]]<span
                                 class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">

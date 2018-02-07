@@ -1,6 +1,7 @@
 package edu.mum.mumsched.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,6 +38,12 @@ public class Faculty {
             joinColumns = {@JoinColumn(name = "faculty_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private Set<Course> preferredCourses;
+    @Transient
+    private Set<Block> lockedBlocks;
+
+    public Faculty() {
+        lockedBlocks=new HashSet<>();
+    }
 
     public int getId() {
         return id;
@@ -129,6 +136,10 @@ public class Faculty {
     
     public boolean isAvailable(Block block) {
         List<BlockMonths> blocks = this.getUnwantedBlocks().stream().filter(b1->b1.toString().contains(block.getBlockName())).collect(Collectors.toList());
+        lockedBlocks.forEach(b->System.out.println(this.getId()+":"+b.getBlockName()));
+
+         if(this.lockedBlocks.contains(block))
+             return false;
         return blocks.size() == 0 ? true : false;
     }
 
@@ -139,4 +150,17 @@ public class Faculty {
         }
     }
 
+    public void addLockBlock(Block block){
+        if(block!=null){
+            this.lockedBlocks.add(block);
+        }
+    }
+
+    public Set<Block> getLockedBlocks() {
+        return lockedBlocks;
+    }
+
+    public void setLockedBlocks(Set<Block> lockedBlocks) {
+        this.lockedBlocks = lockedBlocks;
+    }
 }

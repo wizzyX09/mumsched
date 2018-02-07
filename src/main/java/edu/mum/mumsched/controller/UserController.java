@@ -3,6 +3,7 @@ package edu.mum.mumsched.controller;
 import edu.mum.mumsched.model.Role;
 import edu.mum.mumsched.model.User;
 import edu.mum.mumsched.service.*;
+import edu.mum.mumsched.util.UserRoleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -31,10 +33,6 @@ public class UserController {
     @Autowired
     private IFacultyService iFacultyService;
 
-    public final static String ROLE_STUDENT = "STUDENT";
-    public final static String ROLE_FACULTY = "FACULTY";
-    public final static String ROLE_ADMIN = "ADMIN";
-
     @GetMapping("/allUsers")
     public String findAll(Model model) {
         model.addAttribute("allUser", userService.findAll());
@@ -48,16 +46,17 @@ public class UserController {
     }
 
     @GetMapping("/deleteUser/{id}")
-    public String deleteUserForm(@PathVariable("id") Integer id){
+    public String deleteUserForm(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         userService.delete(id);
+        redirectAttributes.addFlashAttribute("messageSuccess", "User is deleted successfully.");
         return "redirect:/allUsers";
     }
 
     @GetMapping("/newUser")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("listOfRoles", iRoleService.findAllExcept(ROLE_STUDENT, ROLE_FACULTY));
-//        model.addAttribute("listOfRoles", iRoleService.findAll());
+        model.addAttribute("listOfRoles",
+                iRoleService.findAllExcept(UserRoleUtil.ROLE_STUDENT, UserRoleUtil.ROLE_FACULTY));
         return "user/form";
     }
 
@@ -68,9 +67,11 @@ public class UserController {
     }
 
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute @Valid User user, BindingResult bindingResult) {
+    public String saveUser(@ModelAttribute @Valid User user, BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
         bindingResult.hasErrors();
         userService.updateUser(user);
+        redirectAttributes.addFlashAttribute("messageSuccess","The user saved!");
         return "redirect:/allUsers";
     }
 
@@ -91,15 +92,16 @@ public class UserController {
 
     @GetMapping("/user/accountType")
     public String accountTypeForm(Model model){
-        model.addAttribute("roles", Arrays.asList(ROLE_STUDENT, ROLE_FACULTY, ROLE_ADMIN));
+        model.addAttribute("roles", Arrays.asList(
+                UserRoleUtil.ROLE_STUDENT, UserRoleUtil.ROLE_FACULTY, UserRoleUtil.ROLE_ADMIN));
         return "user/accountTypeForm";
     }
 
     @PostMapping("/user/generateAccount")
     public String generateAccount(@RequestParam("accountType") String accountType, Model model){
-        if(accountType.equals(ROLE_STUDENT)) {
+        if(accountType.equals(UserRoleUtil.ROLE_STUDENT)) {
             return generateStudentList(model);
-        } else if(accountType.equals(ROLE_FACULTY)) {
+        } else if(accountType.equals(UserRoleUtil.ROLE_FACULTY)) {
             return generateFacultyList(model);
         }
         return "redirect:/newUser";
@@ -107,7 +109,7 @@ public class UserController {
 
     @GetMapping("/user/generateStudentList")
     public String generateStudentList(Model model) {
-        model.addAttribute("list", iStudentService.findAll());
+            model.addAttribute("list", iStudentService.findAll());
         return "user/generateStudentList";
     }
 
@@ -128,4 +130,9 @@ public class UserController {
         userService.generateUserByFaculty(iFacultyService.findById(id));
         return "redirect:/allUsers";
     }
+
+  /*  @GetMapping("/403")
+    public String _403(){
+        return"403";
+    }*/
 }

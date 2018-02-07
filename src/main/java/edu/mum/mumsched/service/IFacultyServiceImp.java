@@ -1,5 +1,6 @@
 package edu.mum.mumsched.service;
 
+import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.model.Faculty;
 import edu.mum.mumsched.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,10 @@ public class IFacultyServiceImp implements IFacultyService {
     @Override
     public Faculty findByEmail(String email) {
         return facultyRepository.findFacultyByEmail(email);
+    }
+
+    @Override
+    public List<Faculty> findAllByPreferredCoursesContains(Course course) {
+        return facultyRepository.findAllByPreferredCoursesContains(course);
     }
 }

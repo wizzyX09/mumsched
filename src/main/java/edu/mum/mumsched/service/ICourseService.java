@@ -12,4 +12,6 @@ public interface ICourseService {
     public Course save(Course course);
     public List<Course> findAllExcept(Integer courseId);
     public List<Course> findDuplicates(String name, Integer courseId);
+    public List<Course> findAllByPrerequisitesContains(Course course);
+    public List<Course> findAllAvailableByDepartment(String departmentName);
 }

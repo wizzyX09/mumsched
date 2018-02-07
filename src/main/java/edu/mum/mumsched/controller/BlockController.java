@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -44,15 +45,26 @@ public class BlockController {
     }
 
     @PostMapping("/saveBlock")
-    public String saveBlockForm(@Valid Block block, BindingResult bindingResult) {
+    public String saveBlockForm(@Valid Block block, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         bindingResult.hasErrors();
-        iBlockService.save(block);
+        Block foundBlock = iBlockService.findBlockByBlockNameAndSequenceNumber(block.getBlockName(), block.getSequenceNumber());
+        if (foundBlock != null) { // if found duplicate
+            //return error
+            redirectAttributes.addFlashAttribute("messageError", "The block name and seq. number combination cannot be duplicated.");
+        } else {
+            iBlockService.save(block);
+        }
         return "redirect:/allBlock";
     }
 
     @GetMapping("/deleteBlock/{id}")
-    public String deleteBlockForm(@PathVariable("id") Integer id) {
-        iBlockService.delete(id);
+    public String deleteBlockForm(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            iBlockService.delete(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("messageError", "The block could not be deleted because of integrity constraint violations.");
+        }
+
         return "redirect:/allBlock";
     }
 

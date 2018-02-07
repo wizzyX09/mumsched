@@ -1,0 +1,100 @@
+<!DOCTYPE html >
+<html layout:decorator="shared/mainlayout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<th:block layout:fragment="header">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Entry Detail
+                </div>
+                <div class="panel-body" th:object="${entry}">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Entry Name: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.entryName}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Number Of FPP: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.fppNumber}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Number Of MPP: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.mppNumber}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Percent of OPT: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.percentOpt}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Percent of CPT: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.percentCpt}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Percent of US Resident: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.percentUsResident}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Start Date: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.startDate}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">End Date: </label>
+                            <div class="col-sm-9">
+                                <p th:text="${entry.endDate}" class="form-control-static"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Blocks: </label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">
+                                    <a th:each="block : ${entry.blocks}" th:inline="text"
+                                       class="badge badge-primary" th:href="@{'/detailsBlock/' + ${block.id}}">
+                                        [[${block.blockName}]]
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <a th:href="@{'/updateEntry/' + ${entry.id}}" class="btn btn-success">Edit</a>
+                            <a class="btn btn-default" th:href="@{/allEntry}">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="footer">
+</th:block>
+
+</body>
+</html>

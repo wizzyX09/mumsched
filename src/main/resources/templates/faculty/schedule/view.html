@@ -28,7 +28,7 @@
                             <tr class="odd gradeX">
                                 <td th:text="${entry.entryName}"></td>
                                 <td>
-                                    <a th:href="@{/schedule/manage}" class="btn btn-primary btn-sm">View Schedule</a>
+                                    <a th:if="${entry.schedule != null}" th:href="@{'/schedule/details/' + ${entry.schedule.id}}" class="btn btn-primary btn-sm">View Schedule</a>
                                 </td>
                             </tr>
                         </th:block>

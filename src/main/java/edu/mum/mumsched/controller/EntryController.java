@@ -45,6 +45,7 @@ public class EntryController {
             entry.setBlocks(null);
             iEntryService.save(entry);
             iEntryService.delete(id);
+            redirectAttributes.addFlashAttribute("messageSuccess","The entry has deleted!");
         } else {
             redirectAttributes.addFlashAttribute("messageError",
                     "The entry was not deleted! Schedule is created. " +
@@ -65,8 +66,14 @@ public class EntryController {
                             BindingResult bindingResult, RedirectAttributes redirectAttributes){
         bindingResult.hasErrors();
         iEntryService.save(entry);
-        redirectAttributes.addFlashAttribute("messageSuccess","The entry was saved successful!");
+        redirectAttributes.addFlashAttribute("messageSuccess","The entry saved!");
         return "redirect:/allEntry";
+    }
+
+    @GetMapping("/detailsEntry/{id}")
+    public String detailsEntryForm(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("entry", iEntryService.findById(id));
+        return "entry/details";
     }
 
 }

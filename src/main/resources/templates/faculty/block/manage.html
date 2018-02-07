@@ -18,7 +18,7 @@
                     <form th:action="@{/faculty/block/add}" method="post" th:object="${faculty}">
                         <fieldset>
                             <div class="form-group">
-                                <label for="block" class="col-sm-3">UnwantedBlocks: </label>
+                                <label for="block" class="col-sm-3">Unwanted Blocks</label>
                                 <div class="col-sm-9">
                                     <select multiple class="form-control" id="block" th:field="*{unwantedBlocks}">
                                         <option th:each="monthBlock : ${monthBlockList}"
