@@ -58,8 +58,13 @@ public class BlockController {
     }
 
     @GetMapping("/deleteBlock/{id}")
-    public String deleteBlockForm(@PathVariable("id") Integer id) {
-        iBlockService.delete(id);
+    public String deleteBlockForm(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            iBlockService.delete(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("messageError", "The block could not be deleted because of integrity constraint violations.");
+        }
+
         return "redirect:/allBlock";
     }
 
