@@ -10,6 +10,7 @@ import edu.mum.mumsched.repository.RoleRepository;
 import edu.mum.mumsched.repository.StudentRepository;
 import edu.mum.mumsched.repository.UserRepository;
 import edu.mum.mumsched.util.RandomUtil;
+import edu.mum.mumsched.util.UserRoleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -95,14 +96,14 @@ public class UserServiceImpl implements UserService{
 		user.setFirstName(student.getFirstName());
 		user.setLastName(student.getLastName());
 		user.setEmail(student.getEmail());
-		user.setRoles(roleRepository.findAllByRole(("STUDENT")));
+		user.setRoles(roleRepository.findAllByRole((UserRoleUtil.ROLE_STUDENT)));
 		user.setPassword(bCryptPasswordEncoder.encode(password));
 		user.setActive(true);
 		userRepository.save(user);
 		student.setUser(user);
 		studentRepository.save(student);
 		System.out.println("password " + password);
-//		iEmailService.sendGeneratedAccountMail(user.getEmail(), password);
+		iEmailService.sendGeneratedAccountMail(user.getEmail(), password);
 		return user;
 	}
 
@@ -114,12 +115,13 @@ public class UserServiceImpl implements UserService{
         user.setFirstName(faculty.getFirstName());
         user.setLastName(faculty.getLastName());
         user.setEmail(faculty.getEmail());
-        user.setRoles(roleRepository.findAllByRole(("FACULTY")));
+        user.setRoles(roleRepository.findAllByRole((UserRoleUtil.ROLE_FACULTY)));
         user.setPassword(bCryptPasswordEncoder.encode(password));
         user.setActive(true);
         userRepository.save(user);
         faculty.setUser(user);
         facultyRepository.save(faculty);
+		System.out.println("password " + password);
         iEmailService.sendGeneratedAccountMail(user.getEmail(), password);
         return user;
     }
