@@ -169,7 +169,6 @@ public class FacultyController {
     @PostMapping("/block/add")
     public String addUnwantedBlocks(@ModelAttribute("faculty") Faculty faculty) {
         Faculty connectedFaculty = getLoggedInFaculty();
-        List<BlockMonths> monthBlockList = MonthUtil.getMonths();
         if (faculty != null) {
             connectedFaculty.getUnwantedBlocks().addAll(faculty.getUnwantedBlocks());
             iFacultyService.save(connectedFaculty);
