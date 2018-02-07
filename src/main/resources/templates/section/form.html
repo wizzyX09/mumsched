@@ -11,6 +11,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span th:text="${title}"></span>
+                    <div id='hideMe' style="color:white;font-weight:bold;background-color:green" th:text="${message}"></div>
                 </div>
                 <div class="panel-body">
             <form action="#" th:action="@{/section/saveSection}" th:object="${sectionForm}" method="post">

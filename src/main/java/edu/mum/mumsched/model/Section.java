@@ -15,7 +15,7 @@ public class Section {
     private Integer availableSeats;
 
     //students enrolled for section
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "section_student",
             joinColumns = {@JoinColumn(name = "section_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id", referencedColumnName="id")})

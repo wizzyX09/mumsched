@@ -1,11 +1,12 @@
 package edu.mum.mumsched.controller;
 
+import edu.mum.mumsched.SectionRegistrationSubsystem.ISectionRegistrationSubsystem;
 import edu.mum.mumsched.model.*;
 import edu.mum.mumsched.service.ICourseService;
 import edu.mum.mumsched.service.IEntryService;
 import edu.mum.mumsched.service.IFacultyService;
-import edu.mum.mumsched.service.ISectionService;
 import edu.mum.mumsched.util.MonthUtil;
+import edu.mum.mumsched.util.SpecializationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +36,7 @@ public class FacultyController {
     IEntryService iEntryService;
 
     @Autowired
-    ISectionService iSectionService;
+    ISectionRegistrationSubsystem sectionRegistrationFacade;
 
     @GetMapping("/course")
     public String displayPreferredCourses(Model model) {
@@ -69,7 +71,7 @@ public class FacultyController {
     @GetMapping("/section")
     public String displaySections(Model model) {
         // to display list of sections in drop down list
-        List<Section> sectionList = iSectionService.findAll();
+        List<Section> sectionList = sectionRegistrationFacade.findAll();
         model.addAttribute("sectionList", sectionList);
 
         // created as a container to hold multiple sections from selection
@@ -137,6 +139,10 @@ public class FacultyController {
     public String updateFacultyProfile(Model model) {
         Faculty faculty = getLoggedInFaculty();
         model.addAttribute("faculty", faculty);
+
+        List<Specialization> specializations = SpecializationUtil.getSpecializations();
+        model.addAttribute("specializations", specializations);
+
         return "faculty/profile/update";
     }
 

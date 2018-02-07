@@ -1,14 +1,13 @@
-package edu.mum.mumsched.service;
+package edu.mum.mumsched.SectionRegistrationSubsystem;
 
 import edu.mum.mumsched.model.Section;
-import edu.mum.mumsched.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ISectionServiceImpl implements ISectionService {
+class ISectionServiceImpl implements ISectionService {
 
     @Autowired
     private SectionRepository sectionRepository;
@@ -29,5 +28,10 @@ public class ISectionServiceImpl implements ISectionService {
     @Override
     public List<Section> findAll() {
         return sectionRepository.findAll();
+    }
+
+    @Override
+    public List<Section> findByBlockId(Integer blockId, Integer id) {
+        return sectionRepository.findByBlockId(blockId, id);
     }
 }
