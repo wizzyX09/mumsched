@@ -5,6 +5,8 @@ import edu.mum.mumsched.model.Entry;
 import edu.mum.mumsched.repository.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class IEntryServiceImpl implements IEntryService {
     public void delete(Integer entryId) {
         entryRepository.delete(entryId);
     }
-
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public void save(Entry entry) {
         entryRepository.save(entry);

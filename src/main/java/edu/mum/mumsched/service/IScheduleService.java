@@ -9,4 +9,5 @@ public interface IScheduleService {
     public List<Schedule> findAll();
     public void delete(Integer scheduleId);
     public Schedule saveOrUpdate(Schedule schedule);
+    public void delete(Schedule schedule);
 }

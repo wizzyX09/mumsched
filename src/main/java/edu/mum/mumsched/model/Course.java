@@ -36,6 +36,7 @@ public class Course implements Serializable {
         Collections.shuffle(sortedList);
         Collections.shuffle(courseList);
         sortedList.addAll(courseList);
+        sortedList.forEach(course->System.out.println(course.getName()));
         return sortedList;
     }
 
