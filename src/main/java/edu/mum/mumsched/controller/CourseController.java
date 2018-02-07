@@ -84,18 +84,15 @@ public class CourseController {
         List<Course> prereqs = iCourseService.findAllByPrerequisitesContains(course);
         List<Faculty> faculties = iFacultyService.findAllByPreferredCoursesContains(course);
         List<Section> sections = sectionRegistrationFacade.findByCourse(course);
-        if(prereqs.size() > 0 || faculties.size() > 0 || sections.size() > 0) {
+        if(!prereqs.isEmpty() || !faculties.isEmpty() || !sections.isEmpty()) {
             String messages = "The course was not deleted!";
-            if(prereqs.size() > 0) {
+            if(!prereqs.isEmpty()) {
                 messages += " Course is used for prerequisite.";
             }
-            if(faculties.size() > 0) {
+            if(!faculties.isEmpty()) {
                 messages += " Course is used for Faculty's preferred course.";
             }
-            if(faculties.size() > 0) {
-                messages += " Course is used for Faculty's preferred course.";
-            }
-            if(sections.size() > 0) {
+            if(!sections.isEmpty()) {
                 messages += " Course is used for Section.";
             }
             redirectAttributes.addFlashAttribute("messageError", messages);

@@ -64,13 +64,13 @@ public class UserServiceImpl implements UserService{
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Integer id) {
 		User user = userRepository.findOne(id);
-		if(!studentRepository.findAllByUserIs(user).isEmpty()) {
-			Student student = studentRepository.findByUser(user);
+		Student student = studentRepository.findByUser(user);
+		if(student != null) {
 			student.setUser(null);
 			studentRepository.save(student);
 		}
-		if(!facultyRepository.findAllByUserIs(user).isEmpty()) {
-			Faculty faculty = facultyRepository.findByUser(user);
+		Faculty faculty = facultyRepository.findByUser(user);
+		if(faculty != null) {
 			faculty.setUser(null);
 			facultyRepository.save(faculty);
 		}
