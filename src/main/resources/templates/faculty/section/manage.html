@@ -15,14 +15,14 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form th:action="@{/faculty/section/add}" th:object="${faculty}" method="post">
+                    <form th:action="@{/faculty/section/add}" th:object="${section}" method="post">
                         <fieldset>
                             <div class="form-group">
                                 <label for="section" class="col-sm-3">Section: </label>
                                 <div class="col-sm-9">
-                                    <select multiple class="form-control" id="section" th:field="*{sections}">
+                                    <select class="form-control" id="section" th:field="*{id}">
                                         <option th:each="section : ${sectionList}"
-                                                th:value="${section}" th:text="${section.name}">
+                                                th:value="${section.id}" th:text="${section.name}">
                                         </option>
                                     </select>
                                     <p class="help-block"></p>
