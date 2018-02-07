@@ -43,6 +43,26 @@ public class ScheduleController {
         return "schedule/edit";
     }
 
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable Integer id, Model model) {
+        Schedule schedule=iScheduleService.findById(id);
+        if(schedule==null)return "redirect:/schedule/manage";
+        model.addAttribute("schedule",schedule);
+        return "schedule/details";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id,Model model) {
+        Schedule schedule=iScheduleService.findById(id);
+        try {
+            iScheduleService.delete(schedule);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+      //model.addAttribute("message","Schedule generated");
+        return "redirect:/schedule/manage";
+    }
+
     @PostMapping("/create")
     public String create(@ModelAttribute Schedule schedule,Model model) {
         try {

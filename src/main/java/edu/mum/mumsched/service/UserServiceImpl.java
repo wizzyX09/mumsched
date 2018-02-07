@@ -1,6 +1,7 @@
 package edu.mum.mumsched.service;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import edu.mum.mumsched.model.Faculty;
 import edu.mum.mumsched.model.Student;
 import edu.mum.mumsched.model.User;
@@ -100,7 +101,8 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(user);
 		student.setUser(user);
 		studentRepository.save(student);
-		iEmailService.sendGeneratedAccountMail(user.getEmail(), password);
+		System.out.println("password " + password);
+//		iEmailService.sendGeneratedAccountMail(user.getEmail(), password);
 		return user;
 	}
 
