@@ -1,5 +1,6 @@
 package edu.mum.mumsched.SectionRegistrationSubsystem;
 
+import edu.mum.mumsched.model.Course;
 import edu.mum.mumsched.model.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,6 @@ interface SectionRepository extends JpaRepository<Section, Integer> {
 
     @Query("select s from Section s where block.id = :blockId and s.id <> :id")
     public List<Section> findByBlockId(@Param("blockId") Integer blockId, @Param("id") Integer id);
+
+    public List<Section> findByCourse(Course course);
 }

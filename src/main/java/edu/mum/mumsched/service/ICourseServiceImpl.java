@@ -39,6 +39,11 @@ public class ICourseServiceImpl implements ICourseService {
 
     @Override
     public List<Course> findDuplicates(String name, Integer courseId) {
-        return courseRepository.findByNameAndIdIsNot(name, courseId);
+        return courseRepository.findByNameNotAndIdNot(name, courseId);
+    }
+
+    @Override
+    public List<Course> findAllByPrerequisitesContains(Course course) {
+        return courseRepository.findAllByPrerequisitesContains(course);
     }
 }

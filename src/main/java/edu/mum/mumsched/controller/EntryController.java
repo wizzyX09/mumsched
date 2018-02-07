@@ -69,4 +69,10 @@ public class EntryController {
         return "redirect:/allEntry";
     }
 
+    @GetMapping("/detailsEntry/{id}")
+    public String detailsEntryForm(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("entry", iEntryService.findById(id));
+        return "entry/details";
+    }
+
 }
