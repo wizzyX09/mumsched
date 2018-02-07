@@ -36,7 +36,7 @@ public class FacultyController {
     IEntryService iEntryService;
 
     @Autowired
-    ISectionRegistrationSubsystem sectionRegistrationFacade;
+    ISectionRegistrationSubsystem iSectionRegistrationSubsystem;
 
     @GetMapping("/course")
     public String displayPreferredCourses(Model model) {
@@ -71,7 +71,7 @@ public class FacultyController {
     @GetMapping("/section")
     public String displaySections(Model model) {
         // to display list of sections in drop down list
-        List<Section> sectionList = sectionRegistrationFacade.findAll();
+        List<Section> sectionList = iSectionRegistrationSubsystem.findAll();
         model.addAttribute("sectionList", sectionList);
 
         // when a section is selected from the drop down list, the id of the selected section
@@ -89,7 +89,7 @@ public class FacultyController {
     @PostMapping("/section/add")
     public String addSections(@Valid @ModelAttribute("section") Section selectedSection, BindingResult bindingResult) {
         Faculty connectedFaculty = getLoggedInFaculty();
-        Section sec = iSectionService.findById(selectedSection.getId());
+        Section sec = iSectionRegistrationSubsystem.findById(selectedSection.getId());
         if (connectedFaculty != null && sec != null) {
             connectedFaculty.getSections().add(sec);
             iFacultyService.save(connectedFaculty);
