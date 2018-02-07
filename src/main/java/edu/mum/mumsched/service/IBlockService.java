@@ -10,4 +10,5 @@ public interface IBlockService {
     public void save(Block block);
     public List<Block> findAll();
     public List<Block> findAllByOrdered();
+    public Block findBlockByBlockNameAndSequenceNumber(String blockName, Integer seqNum);
 }

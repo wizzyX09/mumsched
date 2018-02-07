@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -44,9 +45,15 @@ public class BlockController {
     }
 
     @PostMapping("/saveBlock")
-    public String saveBlockForm(@Valid Block block, BindingResult bindingResult) {
+    public String saveBlockForm(@Valid Block block, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         bindingResult.hasErrors();
-        iBlockService.save(block);
+        Block foundBlock = iBlockService.findBlockByBlockNameAndSequenceNumber(block.getBlockName(), block.getSequenceNumber());
+        if (foundBlock != null) { // if found duplicate
+            //return error
+            redirectAttributes.addFlashAttribute("messageError", "The block id and seq. number combination cannot be duplicated.");
+        } else {
+            iBlockService.save(block);
+        }
         return "redirect:/allBlock";
     }
 

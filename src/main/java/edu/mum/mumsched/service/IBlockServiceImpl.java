@@ -37,4 +37,9 @@ public class IBlockServiceImpl implements IBlockService{
     public List<Block> findAllByOrdered() {
         return blockRepository.findAllByOrderByStartDateAsc();
     }
+
+    @Override
+    public Block findBlockByBlockNameAndSequenceNumber(String blockName, Integer seqNum) {
+        return blockRepository.findBlockByBlockNameAndSequenceNumber(blockName, seqNum);
+    }
 }
