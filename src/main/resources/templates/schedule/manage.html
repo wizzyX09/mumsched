@@ -41,6 +41,7 @@
                                 <td>
                                  <a th:href="@{'/schedule/edit/' + ${schedule.id}}" class="btn btn-success btn-sm">Edit</a>&nbsp;
                                  <a th:if="${schedule.status.toString().equals('DRAFT')}" th:href="@{'/schedule/approved/' + ${schedule.id}}" class="btn btn-success btn-sm">Approved</a>&nbsp;
+                                    <a th:if="${schedule.status.toString().equals('APPROVED')}" th:href="@{'/schedule/unapproved/' + ${schedule.id}}" class="btn btn-success btn-sm">
                                  <a th:href="@{'/schedule/delete/' +${schedule.id}}" class="btn btn-danger btn-sm" >Delete</a>&nbsp;
                                  <a th:href="@{'/schedule/details/' + ${schedule.id}}" class="btn btn-success btn-sm">Details</a>
                                 </td>

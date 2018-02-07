@@ -68,16 +68,23 @@ public class ScheduleController {
 
     @GetMapping("/approved/{id}")
     public String approved(@PathVariable("id") Integer id, RedirectAttributes model) {
-        try {
            Schedule schedule= iScheduleService.findById(id);
-           schedule.setStatus(ScheduleStatus.APPROVED);
-           schedule.onApproved();
-           iScheduleService.saveOrUpdate(schedule);
-        }catch(RuntimeException e){
-            e.printStackTrace();
-        }
+           if(schedule!=null) {
+               schedule.setStatus(ScheduleStatus.APPROVED);
+               schedule.onApproved();
+               schedule.checkIfEachSectionHasFaculty();
+               iScheduleService.saveOrUpdate(schedule);
+           }
+           return "redirect:/schedule/manage";
+    }
 
-        model.addAttribute("message","Schedule Approved successfully");
+    @GetMapping("/unapproved/{id}")
+    public String unapproved(@PathVariable("id") Integer id, RedirectAttributes model) {
+        Schedule schedule= iScheduleService.findById(id);
+        if(schedule!=null) {
+            schedule.setStatus(ScheduleStatus.DRAFT);
+            iScheduleService.saveOrUpdate(schedule);
+        }
         return "redirect:/schedule/manage";
     }
 

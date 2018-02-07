@@ -140,4 +140,9 @@ public class Student {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
 }

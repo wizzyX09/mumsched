@@ -27,6 +27,10 @@ public class GlobalExceptionHandler {
             model.addFlashAttribute("exception","Error occurred, cause unknown");
        if(request.getRequestURI().contains("/schedule/delete"))
            return "redirect:/schedule/manage";
+        if(request.getRequestURI().contains("/schedule/approved"))
+            return "redirect:/schedule/manage";
+        if(request.getRequestURI().contains("/schedule/unapproved"))
+            return "redirect:/schedule/manage";
 
         return "redirect:"+request.getRequestURI();
     }

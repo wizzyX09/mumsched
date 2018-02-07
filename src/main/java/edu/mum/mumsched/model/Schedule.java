@@ -116,6 +116,7 @@ public class Schedule implements Serializable{
 
     public void onApproved() {
         entry.checkBlockRequirements();
+
     }
     private Course  findFPPorMPP(String desc,List<Course> courses)throws RuntimeException{
         for(Course course:courses){
@@ -125,6 +126,12 @@ public class Schedule implements Serializable{
         }
         throw new CourseNotFoundException("Some blocks require FPP or MPP section, But No such courses are found in database");
 
+    }
+    public void checkIfEachSectionHasFaculty()throws RuntimeException{
+        for(Section sect:this.getSections()){
+            if(sect.getFaculty()==null)
+                throw new RuntimeException("Some section, in the schedule don't have assigned Faculty");
+        }
     }
 
 }
